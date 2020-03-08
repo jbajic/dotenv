@@ -54,7 +54,7 @@ ps1_font_type="unicode"
 for file in ${BASH_CONFIGURATION_FOLDER_FUNCTIONS}*; do
     source \${file}
 done
-PS1=\$jure_stil
+PS1=\$simple_bash
 ${END_SOURCE}
 EOL
     else
