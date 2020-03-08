@@ -39,4 +39,3 @@ alias gd="git diff"
 alias gl="git log"
 alias gr="git reset"
 alias gs="git status"
-alias git=_git

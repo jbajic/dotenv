@@ -29,8 +29,17 @@ function ps1_print_error()
 function ps1_print_git_branch()
 {
     local git_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+    local git_status="$(git status 2> /dev/null)"
     if [ -n "$git_branch" ]; then
-        printf "$ps1_char_branch$git_branch "
+        if [[ ! $git_status =~ "working directory clean" ]]; then
+            printf "$color_fg_red$ps1_char_branch$git_branch$color_fg_reset"
+        elif [[ $git_status =~ "Your branch is ahead of" ]]; then
+            printf "$color_fg_yellow$ps1_char_branch$git_branch$color_fg_reset"
+        elif [[ $git_status =~ "nothing to commit" ]]; then
+            printf "$color_fg_green$ps1_char_branch$git_branch$color_fg_reset"
+        else
+            printf "$color_fg_purple$ps1_char_branch$git_branch$color_fg_reset"
+        fi
     fi
 }
 

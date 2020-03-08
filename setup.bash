@@ -81,7 +81,7 @@ function _setup() {
 #  Main Function
 ########################
 if [[ "$#" -eq 0 ]];then
-    _check_for_sudo_privilages
+    # _check_for_sudo_privilages
     _greeting
     _setup
     exit 0
