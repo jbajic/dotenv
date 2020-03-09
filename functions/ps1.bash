@@ -10,6 +10,7 @@ if [ "$ps1_font_type" = "unicode" ]; then
     export ps1_char_prompt="$ "
     export ps1_char_refresh=" "
     export ps1_char_edit=" "
+    export ps1_char_user=" "
 else
     export ps1_char_branch=""
     export ps1_char_clock=""
@@ -19,6 +20,7 @@ else
     export ps1_char_prompt="$ "
     export ps1_char_refresh="(r)"
     export ps1_char_edit=""
+    export ps1_char_user=""
 fi
 
 function ps1_print_error()
@@ -44,7 +46,8 @@ function ps1_print_git_branch()
             text_color=${color_fg_green}
             git_icon=${ps1_char_branch}
         fi
-        printf " \001${text_color}\002${git_icon}${git_branch}"
+        # https://superuser.com/questions/301353/escape-non-printing-characters-in-a-function-for-a-bash-prompt/301355#301355
+        printf "\001${text_color}\002${git_icon}${git_branch}"
     fi
 }
 
@@ -102,7 +105,7 @@ $ps1_char_prompt
 
 export simple_bash=\
 "\[$color_fg_red\]"'$(ps1_print_error)'\
-"\[$color_fg_green\]$ps1_char_monitor\u "\
+"\[$color_fg_green\]$ps1_char_user\u "\
 "\[$color_fg_light_blue\]$ps1_char_folder \w "\
 "\[$color_fg_grey\]"\
 '$(ps1_print_git_branch)'\
