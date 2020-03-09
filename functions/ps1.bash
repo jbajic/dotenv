@@ -44,10 +44,19 @@ function ps1_print_git_branch()
             text_color=${color_fg_green}
             git_icon=${ps1_char_branch}
         fi
-        printf " ${text_color}${git_icon}${git_branch}"
-        printf "\[${color_fg_red}\]${git_icon}${git_branch}"
+        printf " \001${text_color}\002${git_icon}${git_branch}"
     fi
 }
+
+# function _set_simple_prompt() {
+#     PS1="$color_fg_red"'$(ps1_print_error)'\
+#     "$color_fg_green$ps1_char_monitor\u "\
+#     "$color_fg_light_blue$ps1_char_folder \w "\
+#     "$color_fg_grey"\
+#     '$(ps1_print_git_branch)'\
+#     "$color_fg_reset"\
+#     "$ps1_char_prompt"
+# }
 
 function ps1_color_fg_git()
 {
@@ -99,6 +108,9 @@ export simple_bash=\
 '$(ps1_print_git_branch)'\
 "\[$color_fg_reset\]"\
 "$ps1_char_prompt"
+
+# export simple_bash=_set_simple_prompt\
+
 
 function ps1_styles_set()
 {

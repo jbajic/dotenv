@@ -1,13 +1,13 @@
 #!/bin/bash
 
-export color_fg_reset="\033[0m"
-export color_fg_green="\033[0;49;32m"
-export color_fg_yellow="\033[0;49;33m"
-export color_fg_light_blue="\033[0;49;36m"
-export color_fg_white="\033[0;49;37m"
-export color_fg_grey="\033[0;49;90m"
-export color_fg_red="\033[0;49;91m"
-export color_fg_purple="\033[0;49;94m"
+export color_fg_reset="\e[0m"
+export color_fg_green="\e[0;49;32m"
+export color_fg_yellow="\e[0;49;33m"
+export color_fg_light_blue="\e[0;49;36m"
+export color_fg_white="\e[0;49;37m"
+export color_fg_grey="\e[0;49;90m"
+export color_fg_red="\e[0;49;91m"
+export color_fg_purple="\e[0;49;94m"
 
 function i_color_codes_1()
 {

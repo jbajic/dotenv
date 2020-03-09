@@ -77,8 +77,35 @@ function _setup() {
     _source_scripts
 }
 
-function _setup_git() {
+function _setup_aliases() {
+    echo "Source system aliases!"
+    local BEGIN_SOURCE="#### Useful aliases START"
+    local END_SOURCE="#### Useful aliases END"
+    # Remove any previous sourcing
+    sed -i "/${BEGIN_SOURCE}/,/${END_SOURCE}/d" ${BASH_CONFIGURATION_FILE}
 
+    if [[ -f "${BASH_CONFIGURATION_FILE}" ]]; then
+cat >> "${BASH_CONFIGURATION_FILE}" <<EOL
+${BEGIN_SOURCE}
+alias da='du -Sh | sort -h'
+${END_SOURCE}
+EOL
+    else
+        echo "Bash configuration file not found!"
+        exit 1
+    fi
+    _command_finished
+}
+
+function _setup_git() {
+    echo "Setup git aliases!"
+    git config --global alias.ch checkout
+    git config --global alias.st status
+    git config --global alias.ad "add ."
+    git config --global alias.hist "log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
+    git config --global alias.destroy "!git checkout . && git reset HEAD"
+    git config --global alias.annihilate "!git checkout . && git reset HEAD --hard && git clean -fdx"
+    _command_finished
 }
 
 ########################
@@ -86,10 +113,8 @@ function _setup_git() {
 ########################
 if [[ "$#" -eq 0 ]];then
     # _check_for_sudo_privilages
-    _greeting
-    _setup
-    _setup_git
-    exit 0
+    echo "Choose either basic, full, or aliases option!"
+    exit 1
 else
     case ${1} in
     --help)
@@ -97,6 +122,20 @@ else
         echo "It changes the theme of shell and give a basic set"
         echo "of commands that you can use!"
         exit 1
+        ;;
+    basic)
+        _greeting
+        _setup
+        ;;
+    full)
+        _greeting
+        _setup
+        _setup_aliases
+        _setup_git
+        ;;
+    aliases)
+        _setup_aliases
+        _setup_git
         ;;
     *)
         echo "Unrecognized argument!"
