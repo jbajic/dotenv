@@ -29,23 +29,20 @@ function ps1_print_error()
 function ps1_print_git_branch()
 {
     local git_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
-    local git_status="$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1)"
     if [[ -n "${git_branch}" ]]; then
         local text_color=""
         local git_icon=""
-        if [[ "${git_status}" =~ "working directory clean" ]]; then
+        if [[ $(git status | grep -q -c 'Changes not staged for commit:') -gt 0 ]]; then
             text_color=${color_fg_red}
-            git_icon=${ps1_char_branch}
-        elif [[ ${git_status} =~ "Your branch is ahead of" ]]; then
-            text_color=${COLOR_YELLOW}
-            git_icon=${ps1_char_branch}
-        elif [[ ${git_status} =~ "nothing to commit" ]]; then
-            text_color=${COLOR_GREEN}
-            git_icon=${ps1_char_branch}
+            git_icon=${ps1_char_edit}
+        elif [[ $(git status | grep -q -c 'Changes to be committed') -gt 0 ]]; then
+            text_color=${color_fg_light_yellow}
+            git_icon=${ps1_char_refresh}
         else
-            text_color=${COLOR_OCHRE}
+            text_color=${color_fg_green}
             git_icon=${ps1_char_branch}
         fi
+        printf " ${text_color}${git_icon}${git_branch}"
         printf "\[${color_fg_red}\]${git_icon}${git_branch}"
     fi
 }
@@ -93,11 +90,11 @@ $color_fg_reset\
 $ps1_char_prompt
 
 export simple_bash=\
-"\[$color_fg_red\]$(eval ps1_print_error)"\
+"\[$color_fg_red\]"'$(ps1_print_error)'\
 "\[$color_fg_green\]$ps1_char_monitor\u "\
 "\[$color_fg_light_blue\]$ps1_char_folder \w "\
 "\[$color_fg_grey\]"\
-"$(eval ps1_print_git_branch)"\
+'$(ps1_print_git_branch)'\
 "\[$color_fg_reset\]"\
 "$ps1_char_prompt"
 
