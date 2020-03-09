@@ -77,6 +77,10 @@ function _setup() {
     _source_scripts
 }
 
+function _setup_git() {
+
+}
+
 ########################
 #  Main Function
 ########################
@@ -84,6 +88,7 @@ if [[ "$#" -eq 0 ]];then
     # _check_for_sudo_privilages
     _greeting
     _setup
+    _setup_git
     exit 0
 else
     case ${1} in

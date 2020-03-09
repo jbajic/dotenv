@@ -1,0 +1,7 @@
+[alias]
+    tra = log --graph --abbrev-commit --format=format:'%C(yellow)%h%C(reset) - (%ar) %an \"%s\" %C(auto)%d%C(reset)' --decorate --all
+    st = status
+    ch = checkout
+    ad = add .
+    destroy = !git checkout . && git reset HEAD
+    annihilate = !git checkout . && git reset HEAD && git clean -fdx
