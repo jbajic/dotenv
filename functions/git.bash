@@ -9,24 +9,9 @@ function _clean_git_lfs(){
     echo "Cleanup finished!"
 }
 
-# function _git(){
-#     if [[ $@ == "destroy" ]]; then
-#         _git_destroy
-#     elif [[ $@ == "annihilate" ]]; then
-#         _git_annihilate
-#     else
-#         command git "$@"
-#     fi
-# }
-
-function _git_destroy() {
-    command git checkout .
-    command git reset --hard HEAD
+function git_full_update() {
+    git pull
+    git submodule foreach --recursive "git checkout master"
+    git submodule foreach --recursive "git pull"
+    git submodule foreach --recursive "git checkout master"
 }
-
-function _git_annihilate() {
-    command git checkout .
-    command git reset --hard HEAD
-    command git clean -fdx
-}
-
