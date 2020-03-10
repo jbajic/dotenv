@@ -4,7 +4,7 @@
 if [ "$ps1_font_type" = "unicode" ]; then
     export ps1_char_branch=" "
     export ps1_char_clock=" "
-    export ps1_char_error=" "
+    export ps1_char_error=""
     export ps1_char_folder=" "
     export ps1_char_monitor=" "
     export ps1_char_prompt="$ "
