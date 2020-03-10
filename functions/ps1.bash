@@ -11,6 +11,7 @@ if [ "$ps1_font_type" = "unicode" ]; then
     export ps1_char_refresh=" "
     export ps1_char_edit=" "
     export ps1_char_user=" "
+    export ps1_char_cloud="  "
 else
     export ps1_char_branch=""
     export ps1_char_clock=""
@@ -21,6 +22,7 @@ else
     export ps1_char_refresh="(r)"
     export ps1_char_edit=""
     export ps1_char_user=""
+    export ps1_char_cloud=""
 fi
 
 function ps1_print_error()
@@ -42,6 +44,9 @@ function ps1_print_git_branch()
         elif [[ $(git status | grep -c 'Changes to be committed') -gt 0 ]]; then
             text_color=${color_fg_light_yellow}
             git_icon=${ps1_char_refresh}
+        elif [[ $(git status | grep -c '(use "git push" to publish your local commits)') -gt 0 ]]; then
+            text_color=${color_fg_blue}
+            git_icon=${ps1_char_cloud}
         else
             text_color=${color_fg_green}
             git_icon=${ps1_char_branch}
