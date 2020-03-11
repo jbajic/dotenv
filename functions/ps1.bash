@@ -38,7 +38,7 @@ function ps1_print_git_branch()
     if [[ -n "${git_branch}" ]]; then
         local text_color=""
         local git_icon=""
-        if [[ $(git status | grep -c 'Changes not staged for commit:') -gt 0 ]]; then
+        if [[ $(git status | grep -c 'Changes not staged for commit\|Untracked files') -gt 0 ]]; then
             text_color=${color_fg_red}
             git_icon=${ps1_char_edit}
         elif [[ $(git status | grep -c 'Changes to be committed') -gt 0 ]]; then
