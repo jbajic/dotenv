@@ -1,5 +1,5 @@
 {
-"workbench.colorCustomizations": {
+  "workbench.colorCustomizations": {
   // The background is optional
   // "terminal.background": "#282a36",
   // "terminal.foreground": "#eff0eb",
@@ -20,5 +20,19 @@
   "terminal.ansiBrightCyan": "#8ec07c",
   "terminal.ansiBrightWhite": "#ebdbb2"
 },
-"terminal.integrated.fontFamily": "'Source Code Pro for Powerline', 'Hack Nerd Font', FontAwesome",
+"files.exclude": {
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "bazel-*": true,
+    "~": true
+},
+"search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "bazel-*": true
+},
+"search.followSymlinks": false 
 }
