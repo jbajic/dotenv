@@ -1,4 +1,5 @@
 Neccessary applications for this bash extension to work:
     - fonts-font-awesome
     - git
+    - https://github.com/powerline/fonts (clone and isntall the project to get newest fonts)
     
