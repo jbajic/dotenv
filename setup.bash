@@ -61,7 +61,7 @@ EOL
         echo "Bash configuration file not found!"
         exit 1
     fi
-    chown  ${CALLER}:${CALLER} ${BASH_CONFIGURATION_FILE}
+    #chown ${CALLER}:${CALLER} ${BASH_CONFIGURATION_FILE}
     _command_finished
 }
 
@@ -72,7 +72,7 @@ function _setup() {
     _command_finished
     echo "Moving all functions to ${BASH_CONFIGURATION_FOLDER_FUNCTIONS}..."
     cp -R functions/* "${BASH_CONFIGURATION_FOLDER_FUNCTIONS}"
-    chown -R "${CALLER}:${CALLER}" ${BASH_CONFIGURATION_FOLDER}
+    #chown -R "${CALLER}:${CALLER}" ${BASH_CONFIGURATION_FOLDER}
     _command_finished
     _source_scripts
 }
