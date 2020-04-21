@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function _clean_git_lfs(){
+function _clean_git_lfs() {
     echo "Perform cleanup with lfs files!"
     git lfs uninstall
     git reset --hard
