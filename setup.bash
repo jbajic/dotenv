@@ -119,12 +119,12 @@ else
     basic)
         _greeting
         _setup
-        _setup_git
         ;;
     full)
         _greeting
         _setup
         _setup_aliases
+        _setup_git
         ;;
     *)
         echo "Unrecognized argument!"
