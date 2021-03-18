@@ -1,5 +1,5 @@
 # Reformated bash
-Project contains a setup script that changes the users default configuration by changing the icons and fonts isntalldefault terminal.
+Project contains a setup script that changes the users default configuration by changing the icons and fonts install default terminal.
 By running full setup you will have these features:
 - git aliases & functions
 - new PS1 look for your bash

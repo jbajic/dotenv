@@ -5,6 +5,7 @@ set -euo pipefail
 #  Imported scripts
 ########################
 source setup_git.bash
+source setup_vim.bash
 
 ########################
 #  Global variables
@@ -118,14 +119,22 @@ else
         ;;
     basic)
         _greeting
-        _setup
+	_setup_aliases
+	_setup_git
         ;;
     full)
         _greeting
-        _setup
         _setup_aliases
         _setup_git
+	_setup_vim
         ;;
+    advanced)
+	_greeting
+	_setup_aliases
+	_setup_git
+	_set_vim
+	_setup
+	;;
     *)
         echo "Unrecognized argument!"
         exit 1
