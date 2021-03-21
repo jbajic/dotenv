@@ -1,7 +1,8 @@
-#!bin/bash
 
-function setup_vim() {
-    mkdir ~/.vim
-    mkdir ~/.vim/undodir
+function _setup_vim() {
+    echo "Setting up vim!"
+    mkdir -p ~/.vim/undodir
     cp vim/vimrc ~/.vimrc
+    vim +'PlugInstall --sync' +qa
 }
+
