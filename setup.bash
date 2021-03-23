@@ -115,25 +115,28 @@ else
         echo "Script is used to setup basic bash enviroment."
         echo "It changes the theme of shell and give a basic set"
         echo "of commands that you can use!"
+        echo "--basic => Git, and Bash aliases"
+        echo "--full => Git, bash aliases & vim"
+        echo "--advanced => Git, bash aliases, vim & bash theme"
         exit 1
         ;;
     basic)
         _greeting
-	_setup_aliases
-	_setup_git
+ 	    _setup_aliases
+	    _setup_git
         ;;
     full)
         _greeting
         _setup_aliases
         _setup_git
-	_setup_vim
+	    _setup_vim
         ;;
     advanced)
-	_greeting
-	_setup_aliases
-	_setup_git
-	_set_vim
-	_setup
+ 	    _greeting
+	    _setup_aliases
+	    _setup_git
+	    _set_vim
+	    _setup
 	;;
     *)
         echo "Unrecognized argument!"
