@@ -1,0 +1,90 @@
+{
+    "python.pythonPath": ".venv/bin/python",
+    "pythonTestExplorer.testFramework": "pytest",
+    "python.testing.pytestArgs": [
+        "-vv",
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "workbench.colorCustomizations": {
+        // The background is optional
+        // "terminal.background": "#282a36",
+        // "terminal.foreground": "#eff0eb",
+        "terminal.ansiBlack": "#282828",
+        "terminal.ansiRed": "#cc241d",
+        "terminal.ansiGreen": "#98971a",
+        "terminal.ansiYellow": "#d79921",
+        "terminal.ansiBlue": "#458588",
+        "terminal.ansiMagenta": "#b16286",
+        "terminal.ansiCyan": "#689d6a",
+        "terminal.ansiWhite": "#a89984",
+        "terminal.ansiBrightBlack": "#928374",
+        "terminal.ansiBrightRed": "#fb4934",
+        "terminal.ansiBrightGreen": "#b8bb26",
+        "terminal.ansiBrightYellow": "#fabd2f",
+        "terminal.ansiBrightBlue": "#83a598",
+        "terminal.ansiBrightMagenta": "#d3869b",
+        "terminal.ansiBrightCyan": "#8ec07c",
+        "terminal.ansiBrightWhite": "#ebdbb2"
+      },
+      "terminal.integrated.fontFamily": "'Source Code Pro for Powerline', 'Hack Nerd Font', FontAwesome",
+      "terminal.integrated.rendererType": "canvas",
+      "terminal.integrated.fontSize": 14,
+      "files.exclude": {
+          "**/.svn": true,
+          "**/.hg": true,
+          "**/CVS": true,
+          "**/.DS_Store": true,
+          "bazel-*": true,
+          "~": true,
+          "**/.coverage*": true,
+          "**/__pycache__": true,
+          "**/*.egg-info": true
+      },
+      "search.exclude": {
+          "**/node_modules": true,
+          "**/bower_components": true,
+          "**/*.code-search": true,
+          "bazel-*": true,
+      },
+    "search.followSymlinks": false,
+    "workbench.iconTheme": "vscode-icons",
+    "python.formatting.blackArgs": [
+        "--line-length=120"
+    ],
+    "python.formatting.provider": "black",
+    "vsicons.dontShowNewVersionMessage": true,
+    "editor.columnSelection": false,
+    "python.showStartPage": false,
+    "editor.rulers": [
+        80, 120
+    ],
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.wordWrap": "on",
+    "launch": {
+        "configurations": [],
+        "compounds": []
+    },
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    //isort & black issue https://github.com/microsoft/vscode-python/issues/6933
+    "python.sortImports.args": [
+        "--multi-line=3",
+        "--trailing-comma",
+        "--force-grid-wrap=0",
+        "--use-parentheses",
+        "--line-width=88",
+    ]
+}
