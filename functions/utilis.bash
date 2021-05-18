@@ -8,5 +8,11 @@ function i_unicode_copy_to_clipboard()
 
 function source_venv()
 {
-    source .venv/bin/activate
+    if [[ ! -z ${@} ]]; then
+        source ${@}
+    elif [[ -d ".venv" ]]; then
+        source .venv/bin/activate
+    else
+        source ${@}
+    fi
 }

@@ -93,6 +93,7 @@ function _setup_aliases() {
 cat >> "${BASH_CONFIGURATION_FILE}" <<EOL
 ${BEGIN_SOURCE}
 alias da='du -Sh | sort -h'
+alias source=source_venv
 ${END_SOURCE}
 EOL
     else
@@ -107,7 +108,7 @@ EOL
 ########################
 if [[ "$#" -eq 0 ]];then
     # _check_for_sudo_privilages
-    echo "Choose either basic, full, or aliases option!"
+    echo "Choose either basic, full, or advanced option!"
     exit 1
 else
     case ${1} in
@@ -127,16 +128,16 @@ else
         ;;
     full)
         _greeting
+        _setup
         _setup_aliases
         _setup_git
 	    _setup_vim
         ;;
     advanced)
+	    _setup
  	    _greeting
 	    _setup_aliases
 	    _setup_git
-	    _set_vim
-	    _setup
 	;;
     *)
         echo "Unrecognized argument!"
