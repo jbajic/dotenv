@@ -16,3 +16,12 @@ function source_venv()
         source ${@}
     fi
 }
+
+function cm-build() {
+    local mode=${1:-Debug}
+    mkdir -p build
+    pushd build
+        cmake -DCMAKE_BUILD_TYPE=${mode} ..
+        make
+    popd
+}
