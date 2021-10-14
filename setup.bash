@@ -36,15 +36,12 @@ function _check_for_sudo_privilages() {
     fi
 }
 
-function _install() {
-    echo "Installing fonts-font-awesome..."
-    apt update
-    apt install -y fonts-font-awesome
-    fc-cache -v
-    _command_finished
-}
+function _setup_bash() {
+    echo "Create .bash folder in ${LOGNAME} home folder..."
+    mkdir -p "${BASH_CONFIGURATION_FOLDER_FUNCTIONS}"
+    echo "Moving all functions to ${BASH_CONFIGURATION_FOLDER_FUNCTIONS}..."
+    cp -R functions/* "${BASH_CONFIGURATION_FOLDER_FUNCTIONS}"
 
-function _source_scripts() {
     echo "Source all script from .bash folder into default"
     echo "bash configuration file."
     local BEGIN_SOURCE="#### CUSTOM FUNCTIONS START"
@@ -66,20 +63,8 @@ EOL
         echo "Bash configuration file not found!"
         exit 1
     fi
-    #chown ${CALLER}:${CALLER} ${BASH_CONFIGURATION_FILE}
+    _setup_aliases
     _command_finished
-}
-
-function _setup() {
-    # _install
-    echo "Create .bash folder in ${LOGNAME} home folder..."
-    mkdir -p "${BASH_CONFIGURATION_FOLDER_FUNCTIONS}"
-    _command_finished
-    echo "Moving all functions to ${BASH_CONFIGURATION_FOLDER_FUNCTIONS}..."
-    cp -R functions/* "${BASH_CONFIGURATION_FOLDER_FUNCTIONS}"
-    #chown -R "${CALLER}:${CALLER}" ${BASH_CONFIGURATION_FOLDER}
-    _command_finished
-    _source_scripts
 }
 
 function _setup_aliases() {
@@ -103,6 +88,44 @@ EOL
     _command_finished
 }
 
+
+function _set_i3() {
+    echo "Setting up i3 config"
+    mkdir -p ${CALLER_HOME}/.config/i3/scripts
+    cp configs/i3 ${CALLER_HOME}/.config/i3/config
+    cp configs/i3exit ${CALLER_HOME}/.config/i3/config/scripts/i3exit
+    _command_finished
+}
+
+function _set_polybar() {
+    echo "Setting up polybar config"
+    mkdir -p ${CALLER_HOME}/.config/polybar
+    cp configs/polybar ${CALLER_HOME}/.config/polybar/config.init
+    cp configs/polybar_launch.sh ${CALLER_HOME}/.config/polybar/launch.sh
+    _command_finished
+}
+
+function init() {
+    echo "Installing all the neccesary stuff!"
+    apt update
+    apt install -y fonts-font-awesome i3 i3lock \
+    cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev \
+    libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev \
+    libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev i3-wm \
+    libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev \
+    libxcb-composite0-dev libjsoncpp-dev
+
+    # Install polybar
+    echo "Install polybar"
+    pushd ~
+        git clone https://github.com/jaagr/polybar.git
+        cd polybar && ./build.sh --all-features
+        rm -rf polybar
+    popd
+    fc-cache -v
+    _command_finished
+}
+
 ########################
 #  Main Function
 ########################
@@ -116,28 +139,25 @@ else
         echo "Script is used to setup basic bash enviroment."
         echo "It changes the theme of shell and give a basic set"
         echo "of commands that you can use!"
-        echo "--basic => Git, and Bash aliases"
+        echo "init => Install all neccesarry packages."
         echo "--full => Git, bash aliases & vim"
         echo "--advanced => Git, bash aliases, vim & bash theme"
         exit 1
         ;;
+    init)
+        init
     basic)
         _greeting
- 	    _setup_aliases
 	    _setup_git
+	    _setup_bash
         ;;
     full)
         _greeting
-        _setup
-        _setup_aliases
         _setup_git
 	    _setup_vim
+	    _setup_i3
+	    _setup_polybar
         ;;
-    advanced)
-	    _setup
- 	    _greeting
-	    _setup_aliases
-	    _setup_git
 	;;
     *)
         echo "Unrecognized argument!"

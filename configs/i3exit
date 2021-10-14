@@ -1,0 +1,48 @@
+#!/bin/bash
+function lock_background() {
+    icon="$HOME/.config/i3/lock.png"
+    # create a temp file
+    img=$(mktemp /tmp/XXXXXXXXXX.png)
+    # Take a screenshot of current desktop
+    import -window root $img
+    # Pixelate the screenshot
+    convert $img -scale 10% -scale 1000% $img
+    # Alternatively, blur the screenshot (slow!)
+    #convert $img -blur 2,5 $img
+    # Add the lock image
+    convert $img $icon -gravity center -composite $img
+    # Run i3lock with custom background
+    i3lock -u -i $img
+    # Remove the tmp file
+    rm $img
+}
+
+function lock() {
+    i3lock
+}
+
+case "$1" in
+    lock)
+        lock_background
+        ;;
+    logout)
+        i3-msg exit
+        ;;
+    suspend)
+        lock && systemctl suspend
+        ;;
+    hibernate)
+        lock && systemctl hibernate
+        ;;
+    reboot)
+        systemctl reboot
+        ;;
+    shutdown)
+        systemctl poweroff
+        ;;
+    *)
+        echo "Usage: $0 {lock|logout|suspend|hibernate|reboot|shutdown}"
+        exit 2
+esac
+
+exit 0
