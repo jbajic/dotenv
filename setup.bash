@@ -100,7 +100,7 @@ function _setup_i3() {
 function _setup_polybar() {
     echo "Setting up polybar config"
     mkdir -p ${CALLER_HOME}/.config/polybar
-    cp configs/polybar ${CALLER_HOME}/.config/polybar/config.init
+    cp configs/polybar ${CALLER_HOME}/.config/polybar/config.ini
     cp configs/polybar_launch.sh ${CALLER_HOME}/.config/polybar/launch.sh
     _command_finished
 }
