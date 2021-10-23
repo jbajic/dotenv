@@ -11,10 +11,10 @@ source setup_vim.bash
 #  Global variables
 ########################
 CALLER=${SUDO_USER:-$USER}
-CALLER_HOME="/home/${CALLER}/"
-BASH_CONFIGURATION_FOLDER="${CALLER_HOME}.bash/"
+CALLER_HOME="/home/${CALLER}"
+BASH_CONFIGURATION_FOLDER="${CALLER_HOME}/.bash"
 BASH_CONFIGURATION_FILE="${CALLER_HOME}.bashrc"
-BASH_CONFIGURATION_FOLDER_FUNCTIONS="${BASH_CONFIGURATION_FOLDER}functions/"
+BASH_CONFIGURATION_FOLDER_FUNCTIONS="${BASH_CONFIGURATION_FOLDER}/functions/"
 ps1_font_type="unicode"
 
 source functions/colors.bash
@@ -89,15 +89,15 @@ EOL
 }
 
 
-function _set_i3() {
+function _setup_i3() {
     echo "Setting up i3 config"
     mkdir -p ${CALLER_HOME}/.config/i3/scripts
     cp configs/i3 ${CALLER_HOME}/.config/i3/config
-    cp configs/i3exit ${CALLER_HOME}/.config/i3/config/scripts/i3exit
+    cp configs/i3exit ${CALLER_HOME}/.config/i3/scripts/i3exit
     _command_finished
 }
 
-function _set_polybar() {
+function _setup_polybar() {
     echo "Setting up polybar config"
     mkdir -p ${CALLER_HOME}/.config/polybar
     cp configs/polybar ${CALLER_HOME}/.config/polybar/config.init
@@ -105,47 +105,52 @@ function _set_polybar() {
     _command_finished
 }
 
-function init() {
+function _init() {
     echo "Installing all the neccesary stuff!"
-    apt update
-    apt install -y fonts-font-awesome i3 i3lock \
-    cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev \
-    libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev \
-    libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev i3-wm \
-    libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev \
-    libxcb-composite0-dev libjsoncpp-dev
+    # apt update
+    # apt install -y fonts-font-awesome i3 i3lock \
+    # cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev \
+    # libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev \
+    # libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev i3-wm \
+    # libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev \
+    # libxcb-composite0-dev libjsoncpp-dev python3-sphinx
 
     # Install polybar
     echo "Install polybar"
     pushd ~
+        rm -rf polybar
         git clone https://github.com/jaagr/polybar.git
-        cd polybar && ./build.sh --all-features
+        cd polybar && ./build.sh --all-features --auto
         rm -rf polybar
     popd
     fc-cache -v
     _command_finished
 }
 
+function _help() {
+    echo "Script is used to setup basic bash enviroment."
+    echo "It changes the theme of shell and give a basic set"
+    echo "of commands that you can use!"
+    echo "  init => Install all neccesarry packages."
+    echo "  basic => Git & bash aliases"
+    echo "  full => Git, bash aliases, vim, i3 & polybar"
+    exit 1
+}
+
 ########################
 #  Main Function
 ########################
-if [[ "$#" -eq 0 ]];then
-    # _check_for_sudo_privilages
-    echo "Choose either basic, full, or advanced option!"
-    exit 1
+if [[ "${#}" -eq 0 ]];then
+    echo "Needs an argument"
+    _help
 else
     case ${1} in
     --help)
-        echo "Script is used to setup basic bash enviroment."
-        echo "It changes the theme of shell and give a basic set"
-        echo "of commands that you can use!"
-        echo "init => Install all neccesarry packages."
-        echo "--full => Git, bash aliases & vim"
-        echo "--advanced => Git, bash aliases, vim & bash theme"
-        exit 1
+        _help
         ;;
     init)
-        init
+        _init
+        ;;
     basic)
         _greeting
 	    _setup_git
@@ -158,10 +163,9 @@ else
 	    _setup_i3
 	    _setup_polybar
         ;;
-	;;
     *)
         echo "Unrecognized argument!"
-        exit 1
+        _help
         ;;
 esac
 fi
