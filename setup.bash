@@ -13,7 +13,7 @@ source setup_vim.bash
 CALLER=${SUDO_USER:-$USER}
 CALLER_HOME="/home/${CALLER}"
 BASH_CONFIGURATION_FOLDER="${CALLER_HOME}/.bash"
-BASH_CONFIGURATION_FILE="${CALLER_HOME}.bashrc"
+BASH_CONFIGURATION_FILE="${CALLER_HOME}/.bashrc"
 BASH_CONFIGURATION_FOLDER_FUNCTIONS="${BASH_CONFIGURATION_FOLDER}/functions/"
 ps1_font_type="unicode"
 
@@ -85,7 +85,6 @@ EOL
         echo "Bash configuration file not found!"
         exit 1
     fi
-    _command_finished
 }
 
 

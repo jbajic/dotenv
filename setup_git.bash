@@ -3,6 +3,9 @@ function _setup_git() {
     git config --global alias.ch checkout
     git config --global alias.st status
     git config --global alias.ad add
+    git config --global alias.cm commit
+    git config --global alias.ps push
+    git config --global alias.cam "commit --amend --no-edit"
     git config --global alias.hist "log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
     git config --global alias.destroy "!git checkout . && git reset HEAD"
     git config --global alias.annihilate "!git checkout . && git reset HEAD --hard && git clean -fdx"
