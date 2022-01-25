@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function vpn() {
-	pushd "${HOME}/Documents/.vpns"
+	pushd "${HOME}/Documents/VPNS"
 	pwd
 	local ARG=${1:-unknown}
 	case ${ARG} in
@@ -93,5 +93,5 @@ function gdb_mem() {
 }
 
 function sm() {
-	source /opt/toolchain-v3/activate
+	source /opt/toolchain-v4/activate
 }
