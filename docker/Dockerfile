@@ -1,8 +1,8 @@
-FROM alpine AS builder
+FROM debian:11 AS builder
 RUN apk add build-base
 WORKDIR /home
 COPY hello.c .
-RUN gcc "-DARCH=\"`uname -a`\"" hello.c -o hello
+RUN gcc -Wall hello.c -o hello
 
 FROM alpine
 WORKDIR /home
