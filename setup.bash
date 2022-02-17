@@ -79,6 +79,7 @@ cat >> "${BASH_CONFIGURATION_FILE}" <<EOL
 ${BEGIN_SOURCE}
 alias da='du -Sh | sort -h'
 alias source=source_venv
+alias ap=ansible-playbook
 ${END_SOURCE}
 EOL
     else
