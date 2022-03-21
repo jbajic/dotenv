@@ -1,5 +1,4 @@
 FROM debian:latest
 ARG TARGETARCH
-RUN echo "copying mem-${TARGETARCH}.deb"
-COPY "mem-${TARGETARCH}.deb" .
-RUN echo "hello"
+
+RUN echo ${TARGETARCH}

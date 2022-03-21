@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_ORGANIZATION_NAME: jbajic
-      DOCKER_REPOSITORY_NAME: test-memgraph
+      DOCKER_REPOSITORY_NAME: ladida
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -43,8 +43,21 @@ jobs:
           cd docker
           docker buildx build \
           --platform linux/arm64,linux/amd64 \
-          --tag jbajic/ladidanew:latest \
-          --tag jbajic/ladidanew:1.1.1 \
+          --tag jbajic/test-tar:latest \
+          --tag jbajic/test-tar:1.1.1 \
           --file dockerfile.new \
           --push .
 
+      - name: Save docker images
+        run: |
+          mkdir output
+          docker pull jbajic/test-tar:latest
+          docker save jbajic/test-tar:latest | gzip > output/test-tar.tar.gz
+          ls -lah
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Docker tar files
+          path: output/test-tar.tar.gz
+          if-no-files-found: warn
