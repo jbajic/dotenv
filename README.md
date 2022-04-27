@@ -9,3 +9,6 @@ By running full setup you will have these features:
 - fonts-font-awesome
 - git
 - https://github.com/powerline/fonts (clone and isntall the project to get newest fonts)
+
+You can run the basic, advanced and full setup.
+
