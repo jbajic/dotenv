@@ -1,4 +1,0 @@
-FROM debian:latest
-ARG TARGETARCH
-
-RUN echo ${TARGETARCH}
