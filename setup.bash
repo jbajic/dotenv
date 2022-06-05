@@ -107,13 +107,14 @@ function _setup_polybar() {
 
 function _init() {
     echo "Installing all the neccesary stuff!"
-    apt update
-    apt install -y fonts-font-awesome i3 i3lock \
+    sudo apt update
+    sudo apt install -y fonts-font-awesome i3 i3lock \
     cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev \
     libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev \
     libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev i3-wm \
     libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev \
-    libxcb-composite0-dev libjsoncpp-dev python3-sphinx imagemagick
+    libxcb-composite0-dev libjsoncpp-dev python3-sphinx imagemagick gcc g++ \
+    libuv1 libuv1-dev
 
     # Install polybar
     echo "Install polybar"
