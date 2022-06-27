@@ -50,7 +50,12 @@ jobs:
           echo $EXISTS
           if [[ ${EXISTS} -eq 0 ]]; then
               echo The specified version has been already released to DockerHub!
-              exit 1
+              if [[ ${{ github.event.inputs.force_release }} = true ]]; then
+                echo Forcing the release
+              else
+                echo Stopping the release
+                exit 1
+              fi
           else
               echo All good the specified version has not been release to DockerHub
           fi
