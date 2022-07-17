@@ -189,13 +189,6 @@ mode "$mode_system" {
 }
 bindsym $mod+x mode "$mode_system"
 
-# Start polybar
-# bar {
-#     i3bar_command $HOME/.config/polybar/launch.sh
-
-# #status_command i3status
-# }
-
 # Laptop and another home monitor
 # workspace $ws1 output HDMI-2
 # workspace $ws2 output eDP-1
@@ -203,4 +196,17 @@ bindsym $mod+x mode "$mode_system"
 # Only laptop
 #workspace $ws1 output eDP-1
 
+
+#  Optinal Startup
+# assign [class="Slack"] $ws3
+# exec google-chrome
+# exec code --wait /home/bajic/Projects/Core/memgraph
+# exec slack
+
+# Launch polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Change keyboard layout
+# exec_always "setxkbmap -layout hr"
+exec "setxkbmap -layout us,hr"
+exec "setxkbmap -option 'grp:alt_shift_toggle'"
