@@ -20,7 +20,7 @@ jobs:
         with:
           BASE_BRANCH: "${{ github.base_ref }}"
 
-      - name: Set base branch
+      - name: Set base branch # what
         if: ${{ github.event_name != 'pull_request' }}
         uses: allenevans/set-env@v2.0.0
         with:
