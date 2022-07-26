@@ -32,4 +32,4 @@ jobs:
       - name: Run git diff
         run: |
           echo "getting difference between ${{ env.BASE_BRANCH }} and HEAD"
-          git diff -U0 ${{ env.BASE_BRANCH }}... --
+          git diff -U0 origin/${{ env.BASE_BRANCH }}... --
