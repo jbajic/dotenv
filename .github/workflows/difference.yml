@@ -16,13 +16,15 @@ jobs:
 
       - name: Set base branch
         if: ${{ github.event_name == 'pull_request' }}
-        env:
+        uses: allenevans/set-env@v2.0.0
+        with:
           BASE_BRANCH: ${{ github.base_ref }}
 
       - name: Set base branch
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
+        uses: allenevans/set-env@v2.0.0
+        with:
           BASE_BRANCH: master
+        if: ${{ github.event_name != 'pull_request' }}
 
       - name: Run git diff
         run: |
