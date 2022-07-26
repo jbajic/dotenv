@@ -18,15 +18,15 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         uses: allenevans/set-env@v2.0.0
         with:
-          BASE_BRANCH: ${{ github.base_ref }}
+          BASE_BRANCH: "${{ github.base_ref }}"
 
       - name: Set base branch
+        if: ${{ github.event_name != 'pull_request' }}
         uses: allenevans/set-env@v2.0.0
         with:
-          BASE_BRANCH: master
-        if: ${{ github.event_name != 'pull_request' }}
+          BASE_BRANCH: "master"
 
       - name: Run git diff
         run: |
           echo "getting difference between ${{ env.BASE_BRANCH }} and HEAD"
-          git diff -U0 master... -- .
+          git diff -U0 ${{ env.BASE_BRANCH }}... --
