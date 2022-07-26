@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Set up repository
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 5
 
       - name: Fetch all history for all tags and branches
         run: git fetch
@@ -22,14 +20,14 @@ jobs:
       - name: Set base branch
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          echo "BASE_BRANCH=${{ github.base_ref }}" >> $GITHUB_ENV
+          echo "BASE_BRANCH=origin/${{ github.base_ref }}" >> $GITHUB_ENV
 
       - name: Set base branch # what is this
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          echo "BASE_BRANCH=master" >> $GITHUB_ENV
+          echo "BASE_BRANCH=origin/master" >> $GITHUB_ENV
 
       - name: Run git diff
         run: |
           echo "getting difference between ${{ env.BASE_BRANCH }} and HEAD"
-          git diff -U0 origin/${{ env.BASE_BRANCH }}... --
+          git diff -U0 ${{ env.BASE_BRANCH }}... --
