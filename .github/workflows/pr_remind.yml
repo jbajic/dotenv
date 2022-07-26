@@ -1,0 +1,30 @@
+name: PRs review reminder
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  run-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@v2
+
+      - name: Set base branch
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+
+      - name: Set base branch
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          BASE_BRANCH: master
+
+      - name: Run git diff
+        run: |
+          echo "getting difference between ${{ env.BASE_BRANCH }} and HEAD"
+          git diff -U0 master... -- .
