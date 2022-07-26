@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Set up repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Set base branch
         if: ${{ github.event_name == 'pull_request' }}
