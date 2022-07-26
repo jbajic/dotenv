@@ -1,4 +1,4 @@
-name: PRs review reminder
+name: Run diff
 
 on:
   push:
