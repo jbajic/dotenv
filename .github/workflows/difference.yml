@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 5
 
+      - name: Fetch all history for all tags and branches
+        run: git fetch
+
       - name: Set base branch
         if: ${{ github.event_name == 'pull_request' }}
         run: |
