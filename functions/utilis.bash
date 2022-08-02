@@ -25,3 +25,9 @@ function cm-build() {
         make
     popd
 }
+
+stacktrace () {
+    # Tyler's cool tip
+    # sudo gdb may be needed here, depending on your system settings around ptrace
+    gdb --batch -ex "t a a bt" -p `pgrep $1`
+}
