@@ -105,6 +105,12 @@ function _setup_polybar() {
     _command_finished
 }
 
+function _setup_xrandr() {
+    echo "Setting up xrand configuration in .xprofile file"
+    cp configs/xprofile ${CALLER_HOME}/.xprofile
+    _command_finished
+}
+
 function _init() {
     echo "Installing all the neccesary stuff!"
     sudo apt update
@@ -163,6 +169,7 @@ else
 	    _setup_vim
 	    _setup_i3
 	    _setup_polybar
+	    _setup_xrandr
         ;;
     *)
         echo "Unrecognized argument!"

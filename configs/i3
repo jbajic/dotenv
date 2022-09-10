@@ -196,9 +196,10 @@ bindsym $mod+x mode "$mode_system"
 # Only laptop
 #workspace $ws1 output eDP-1
 
-
 #  Optinal Startup
-# assign [class="Slack"] $ws3
+# assign [class="code"] $ws1
+# assign [class="Google-chrome"] $ws3
+# assign [class="Slack"] $ws4
 # exec google-chrome
 # exec code --wait /home/bajic/Projects/Core/memgraph
 # exec slack
