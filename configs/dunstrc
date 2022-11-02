@@ -20,12 +20,12 @@
     follow = mouse
 
     ### Geometry ###
-    geometry = "300x300-30+20"
+    geometry = "300x0-30+20"
 
     # dynamic width from 0 to 300
     # width = (0, 300)
     # constant width of 300
-    # width = 300
+    #width = 300
 
     # The maximum height of a single notification, excluding the frame.
     # height = 300
@@ -34,7 +34,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 30x20
+    offset = 30+20
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0

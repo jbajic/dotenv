@@ -111,6 +111,16 @@ function _setup_xrandr() {
     _command_finished
 }
 
+function _setup_dunst() {
+    echo "Setting up dunst configuration in .config/dunst file"
+    mkdir -p .config/dunst
+    cp configs/dunstrx ${CALLER_HOME}/.config/dunst
+    cp images/alert.png ${CALLER_HOME}/.config/dunst
+    cp images/notification.png ${CALLER_HOME}/.config/dunst
+    _command_finished
+}
+
+
 function _init() {
     echo "Installing all the neccesary stuff!"
     sudo apt update
@@ -170,6 +180,7 @@ else
 	    _setup_i3
 	    _setup_polybar
 	    _setup_xrandr
+	    _setup_dunst
         ;;
     *)
         echo "Unrecognized argument!"
