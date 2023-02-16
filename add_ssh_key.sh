@@ -8,8 +8,6 @@
 # How to run?
 # - pass argument specifying ssh key
 
-
-
 hosts_ips=$(cat hosts)
 
 if [ -z "$1" ]; then
