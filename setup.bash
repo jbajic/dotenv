@@ -2,6 +2,27 @@
 set -euo pipefail
 
 ########################
+# Input arguments
+########################
+if [[ "${#}" -eq 2 ]];then
+    echo "Needs two arguments"
+    _help
+fi
+
+SHELL=${1}
+SETUP=${2}
+
+case $SHELL in
+  bash)
+    echo "Setting configuration for 'bash'"
+  zsh)
+    echo "Setting configuration for 'zsh'"
+  *)
+    echo "Chose either zsh or bash!";
+    exit 1
+  ;;
+esac
+########################
 #  Imported scripts
 ########################
 source setup_git.bash
@@ -12,9 +33,9 @@ source setup_vim.bash
 ########################
 CALLER=${SUDO_USER:-$USER}
 CALLER_HOME="/home/${CALLER}"
-BASH_CONFIGURATION_FOLDER="${CALLER_HOME}/.bash"
-BASH_CONFIGURATION_FILE="${CALLER_HOME}/.bashrc"
-BASH_CONFIGURATION_FOLDER_FUNCTIONS="${BASH_CONFIGURATION_FOLDER}/functions/"
+SHELL_CONFIGURATION_FOLDER="${CALLER_HOME}/.${SHELL}"
+SHELL_CONFIGURATION_FILE="${CALLER_HOME}/.${SHELL}rc"
+SHELL_CONFIGURATION_FOLDER_FUNCTIONS="${SHELL_CONFIGURATION_FOLDER}/functions/"
 ps1_font_type="unicode"
 
 source functions/colors.bash
@@ -120,6 +141,17 @@ function _setup_dunst() {
     _command_finished
 }
 
+function _setup_polybar() {
+   # Install polybar
+    echo "Install polybar"
+    pushd ~
+        rm -rf polybar
+        git clone https://github.com/jaagr/polybar.git
+        cd polybar && ./build.sh --all-features --auto
+        rm -rf polybar
+    popd
+    fc-cache -v
+}
 
 function _init() {
     echo "Installing all the neccesary stuff!"
@@ -132,15 +164,6 @@ function _init() {
     libxcb-composite0-dev libjsoncpp-dev python3-sphinx imagemagick gcc g++ \
     libuv1 libuv1-dev
 
-    # Install polybar
-    echo "Install polybar"
-    pushd ~
-        rm -rf polybar
-        git clone https://github.com/jaagr/polybar.git
-        cd polybar && ./build.sh --all-features --auto
-        rm -rf polybar
-    popd
-    fc-cache -v
     _command_finished
 }
 
@@ -157,34 +180,30 @@ function _help() {
 ########################
 #  Main Function
 ########################
-if [[ "${#}" -eq 0 ]];then
-    echo "Needs an argument"
+case ${SETUP} in
+  --help)
     _help
-else
-    case ${1} in
-    --help)
-        _help
-        ;;
-    init)
-        _init
-        ;;
-    basic)
-        _greeting
-	    _setup_git
-	    _setup_bash
-        ;;
-    full)
-        _greeting
-        _setup_git
-	    _setup_vim
-	    _setup_i3
-	    _setup_polybar
-	    _setup_xrandr
-	    _setup_dunst
-        ;;
-    *)
-        echo "Unrecognized argument!"
-        _help
-        ;;
+    ;;
+  init)
+    _init
+    ;;
+  basic)
+    _greeting
+    _setup_git
+    _setup_bash
+    ;;
+  full)
+    _greeting
+    _setup_git
+    _setup_vim
+    _setup_i3
+    _setup_polybar
+    _setup_xrandr
+    _setup_dunst
+    ;;
+  *)
+    echo "Unrecognized argument!"
+    _help
+    ;;
 esac
-fi
+

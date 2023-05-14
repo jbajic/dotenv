@@ -1,21 +1,26 @@
 #!/bin/bash
-
+# Script used to deploy ssh key on multiple
+# hosts
 # Prerequisites:
-# - sshpass
-# - file: `hosts`` with all hosts on which to deploy ssh key
-# - file containing password for the hosts
+# - sshpass: a program used to authenticate on all hosts via script
+# - file: `hosts` with all hosts on which to deploy ssh key
+# - file containing password for the hosts used by sshpass
 #
 # How to run?
-# - pass argument specifying ssh key
+# - pass argument specifying ssh key like this:
+# ./add_ssh_key.sh 
 
-hosts_ips=$(cat hosts)
+HOSTS_FILE=${1}
+PUB_KEY_FILE=${2}
 
-if [ -z "$1" ]; then
+HOSTS=$(cat $HOSTS_FILE)
+
+if [ -z "${PUB_KEY_FILE}" ]; then
     echo "No public key specified!"
     exit 1
 fi
-echo $hosts
-for host_ip in ${hosts_ips}; do
-    echo "Copying ssh-key " to "${host_ip}"
-    sshpass -f pass.txt ssh-copy-id -i ${1} mg@${host_ip}
+echo $HOSTS
+for HOSTS in ${HOSTS}; do
+    echo "Copying ssh-key " to "${HOSTS}"
+    sshpass -f pass.txt ssh-copy-id -i ${1} mg@${HOSTS}
 done
