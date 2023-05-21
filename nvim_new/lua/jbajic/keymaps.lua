@@ -20,10 +20,14 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+--[[keymap("n", "<C-h>", "<C-w>h", opts)]]
+--[[keymap("n", "<C-j>", "<C-w>j", opts)]]
+--[[keymap("n", "<C-k>", "<C-w>k", opts)]]
+--[[keymap("n", "<C-l>", "<C-w>l", opts)]]
+keymap("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", opts)
+keymap("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", opts)
+keymap("n", "<C-l>", "<cmd> TmuxNavigateDown<CR>", opts)
+keymap("n", "<C-l>", "<cmd> TmuxNavigateUp<CR>", opts)
 
 -- keymap("n", "<leader>e", ":lex 30<cr>", opts)
 -- nvim-tree
