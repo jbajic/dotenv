@@ -73,3 +73,23 @@ vim.keymap.set("n", "<leader><leader>", function()
   vim.cmd("so")
 end)
 
+-- Execute current file
+vim.keymap.set("n", "<F5>", function()
+	vim.cmd(":!%:p")
+end)
+
+-- Search visual selected file
+mapping_string = "y/\\V<C-r>=escape(@\",'/\\\\')<CR><CR>"
+vim.keymap.set('v', '//', mapping_string)
+
+-- Custom scripts for building TODO(jbajic) write a function that detets
+-- and runs appropriate tool
+vim.keymap.set("n", "<leader>rb", "<cmd>!cargo build<CR>")
+vim.keymap.set("n", "<leader>rf", "<cmd>!cargo fmt<CR>")
+
+-- Remaps for quick text formatting
+-- under_score to camelCase
+vim.keymap.set("n", "<leader>sfc", [[:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2#g]])
+-- under_score to PascalCase
+vim.keymap.set("n", "<leader>sfp", [[:s#_\(\l\)#\u\1#g]])
+
