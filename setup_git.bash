@@ -1,5 +1,7 @@
 function _setup_git() {
     echo "Setup git aliases!"
+    sudo apt update
+    sudo apt install -y git
     git config --global alias.ch checkout
     git config --global alias.st status
     git config --global alias.ad add
