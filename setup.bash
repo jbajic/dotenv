@@ -71,7 +71,7 @@ function _check_for_sudo_privilages() {
 function _setup_bash() {
     echo "Create .shell directory in ${LOGNAME} home folder..."
     sudo apt update && sudo apt upgrade -y
-    sudo apt install -y fzf fd-find
+    sudo apt install -y fzf fd-find bat
     ln -s $(which fdfind) ~/.local/bin/fd
     mkdir -p "${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}"
     echo "Moving all functions to ${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}..."
@@ -124,9 +124,12 @@ function _setup_aliases() {
     if [[ -f "${SHELL_CONFIGURATION_FILE}" ]]; then
 cat >> "${SHELL_CONFIGURATION_FILE}" <<EOL
 ${BEGIN_SOURCE}
+
 alias da='du -Sh | sort -h'
 alias source=source_venv
 alias ap=ansible-playbook
+alias cat=bat
+
 ${END_SOURCE}
 EOL
     else
