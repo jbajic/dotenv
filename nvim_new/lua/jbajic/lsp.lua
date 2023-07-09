@@ -57,7 +57,7 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
--- Some icons
+-- Some icons from Hack Nerd Font Mono
 local kind_icons = {
   Text = "󰦨",
   Method = "m",
