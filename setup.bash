@@ -124,6 +124,7 @@ function _setup_env() {
     _setup_polybar
     _setup_xrandr
     _setup_dunst
+    _setup_alacritty
 }
 
 function _setup_i3() {
@@ -154,24 +155,23 @@ function _setup_xrandr() {
 
 function _setup_dunst() {
     echo "Setting up dunst configuration in .config/dunst file"
-    mkdir -p .config/dunst
-    cp configs/dunstrc ${CALLER_HOME}/.config/dunst
-    cp images/alert.png ${CALLER_HOME}/.config/dunst
-    cp images/notification.png ${CALLER_HOME}/.config/dunst
+    mkdir -p ${CALLER_HOME}/.config/dunst
+    cp configs/dunstrc ${CALLER_HOME}/.config/dunst/dunstrc
+    cp images/alert.png ${CALLER_HOME}/.config/dunst/alert.png
+    cp images/notification.png ${CALLER_HOME}/.config/dunst.notification.png
     _command_finished
 }
 
-function _init() {
-    echo "Installing all the neccesary stuff!"
+function _setup_alacritty() {
+    echo "Setting up alacritty!"
+    sudo apt update && sudo apt upgrade
+    sudo add-apt-repository ppa:aslatter/ppa -y
     sudo apt update
-    sudo apt install -y fonts-font-awesome \
-    cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev \
-    libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev \
-    libxcb-xkb-dev pkg-config python3-xcbgen xcb-proto libxcb-xrm-dev  \
-    libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev \
-    libxcb-composite0-dev libjsoncpp-dev python3-sphinx imagemagick gcc g++ \
-    libuv1 libuv1-dev
+    sudo apt install alacritty
+    sudo update-alternatives --config x-terminal-emulator
 
+    mkdir -p ${CALLER_HOME}/.config/alacritty
+    #cp configs/alacritty.yml ${CALLER_HOME}/.config/alacritty.yml
     _command_finished
 }
 
@@ -190,9 +190,9 @@ case ${SETUP} in
     ;;
   full)
     _greeting
-    _setup_git
-    _setup_neovim
-    _setup_bash
+#    _setup_git
+    #_setup_neovim
+    #_setup_bash
     _setup_env
     ;;
   *)
