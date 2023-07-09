@@ -176,7 +176,7 @@ bindsym $mod+r mode "resize"
 
 set $mode_system System
 mode "$mode_system" {
-    bindsym l exec --no-startup-id /home/bajic/.config/i3/scripts/i3exit lock, mode "default"
+    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit lock, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym s exec --no-startup-id lock && systemctl suspend, mode "default"
     bindsym h exec --no-startup-id lock && systemctl hibernate, mode "default"
