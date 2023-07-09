@@ -125,6 +125,7 @@ function _setup_env() {
     _setup_xrandr
     _setup_dunst
     _setup_alacritty
+    _setup_tmux
 }
 
 function _setup_i3() {
@@ -164,15 +165,23 @@ function _setup_dunst() {
 
 function _setup_alacritty() {
     echo "Setting up alacritty!"
-    sudo apt update && sudo apt upgrade
+    sudo apt update && sudo apt upgrade -y
     sudo add-apt-repository ppa:aslatter/ppa -y
     sudo apt update
     sudo apt install alacritty
     sudo update-alternatives --config x-terminal-emulator
-
     mkdir -p ${CALLER_HOME}/.config/alacritty
-    #cp configs/alacritty.yml ${CALLER_HOME}/.config/alacritty.yml
+    cp configs/alacritty.yml ${CALLER_HOME}/.config/alacritty.yml
     _command_finished
+}
+
+function _setup_tmux() {
+  echo "Setting up tmux!"
+  sudo apt update && sudo apt upgrade -y
+  sudo apt install -y tmux
+  mkdir -p ${CALLER_HOME}/.config/tmux
+  cp configs/tmux.conf ${CALLER_HOME}/config/tmux/tmux.conf
+  _command_finished
 }
 
 
