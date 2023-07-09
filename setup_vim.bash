@@ -1,7 +1,7 @@
 function _setup_neovim() {
     echo "Setting up neovim!"
     sudo apt update
-    sudo apt install curl unzip -y
+    sudo apt install curl unzip ripgrep -y
 
     # Intall neovim from release pages
     echo "Installing neovim from release pages!"
@@ -11,7 +11,7 @@ function _setup_neovim() {
       chmod u+x nvim.appimage
       mv nvim.appimage nvim
     popd
-    cp -r nvim_new ~/.config/nvim/
+    cp -r nvim ~/.config/nvim/
 
     # Install fonts
     echo "Installing fonts!"

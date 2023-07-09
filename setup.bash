@@ -70,6 +70,9 @@ function _check_for_sudo_privilages() {
 
 function _setup_bash() {
     echo "Create .shell directory in ${LOGNAME} home folder..."
+    sudo apt update && sudo apt upgrade -y
+    sudo apt install -y fzf fd-find
+    ln -s $(which fdfind) ~/.local/bin/fd
     mkdir -p "${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}"
     echo "Moving all functions to ${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}..."
     cp -R functions/* "${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}"
@@ -81,13 +84,26 @@ function _setup_bash() {
     # Remove any previous sourcing
     sed -i "/${BEGIN_SOURCE}/,/${END_SOURCE}/d" ${SHELL_CONFIGURATION_FILE}
 
+    # Copy fzf key bindings
+    cp /usr/share/doc/fzf/examples/key-bindings.bash ~/.bash/key-bindings-fzf.bash
+    sudo chmod 777 ~/.bash/key-bindings-fzf.bash
+
+    # Update shell configuration file
     if [[ -f "${SHELL_CONFIGURATION_FILE}" ]]; then
 cat >> "${SHELL_CONFIGURATION_FILE}" <<EOL
 ${BEGIN_SOURCE}
-ps1_font_type="unicode"
+
+# Source all bash scripts
 for file in ${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}*; do
     source \${file}
 done
+
+# Use fzf
+source ~/.bash/key-bindings-fzf.bash
+export FZF_DEFAULT_COMMAND="fd --hidden"
+export FZF_CTRL_T_COMMAND="\$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="\$FZF_DEFAULT_COMMAND --type d"
+
 ${END_SOURCE}
 EOL
     else
@@ -199,10 +215,10 @@ case ${SETUP} in
     ;;
   full)
     _greeting
-#    _setup_git
+    #_setup_git
     #_setup_neovim
-    #_setup_bash
-    _setup_env
+    _setup_bash
+    #_setup_env
     ;;
   *)
     echo "Unrecognized argument!"

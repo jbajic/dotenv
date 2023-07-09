@@ -201,7 +201,6 @@ bindsym $mod+x mode "$mode_system"
 # assign [class="Google-chrome"] $ws3
 # assign [class="Slack"] $ws4
 # exec google-chrome
-# exec code --wait /home/bajic/Projects/Core/memgraph
 # exec slack
 
 # Launch polybar
