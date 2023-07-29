@@ -43,3 +43,4 @@ vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
 -- Spellcheck options
 vim.opt.spelllang = "en_us"
 vim.opt.spellsuggest = "best,9"
+vim.opt.spell = true
