@@ -49,6 +49,10 @@ return packer.startup(function(use)
 
   -- Colorscheme
   use "folke/tokyonight.nvim"
+  use {
+    "nvim-lualine/lualine.nvim",
+    requires = { "nvim-tree/nvim-web-devicons" }
+  }
 
   -- lsp & cmp plugins
   use {
@@ -98,7 +102,7 @@ return packer.startup(function(use)
 
   -- Git control over files
   use "lewis6991/gitsigns.nvim"
-  
+
   -- Tmux navigator
   use "christoomey/vim-tmux-navigator"
 
