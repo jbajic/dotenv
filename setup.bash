@@ -69,8 +69,9 @@ function _check_for_sudo_privilages() {
 }
 
 function _setup_bash() {
-    echo "Create a .local/bin directory"
+    echo "Create a .local/bin directory and .config"
     mkdir -p "${CALLER_HOME}/.local/bin"
+    mkdir -p "${CALLER_HOME}/.config
 
     sudo apt update && sudo apt upgrade -y
     sudo apt install -y fzf fd-find bat
@@ -220,12 +221,16 @@ case ${SETUP} in
     _setup_git
     _setup_bash
     ;;
+  editor)
+    _setup_bash
+    _setup_git
+    _setup_neovim
   full)
     _greeting
-    #_setup_git
-    #_setup_neovim
+    _setup_git
+    _setup_neovim
     _setup_bash
-    #_setup_env
+    _setup_env
     ;;
   *)
     echo "Unrecognized argument!"

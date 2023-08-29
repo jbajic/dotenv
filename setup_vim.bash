@@ -5,7 +5,6 @@ function _setup_neovim() {
 
     # Intall neovim from release pages
     echo "Installing neovim from release pages!"
-    mkdir -p ~/.local/bin
     pushd ~/.local/bin/
       curl -LO  https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
       chmod u+x nvim.appimage
@@ -15,6 +14,7 @@ function _setup_neovim() {
 
     # Install fonts
     echo "Installing fonts!"
+    mkdir /usr/local/share/fonts
     local FONTS=("FiraCode" "Hack" "SourceCodePro" "SpaceMono")
     pushd /usr/local/share/fonts
       for FONT in "${FONTS[@]}"; do
