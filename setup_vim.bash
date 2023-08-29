@@ -14,7 +14,7 @@ function _setup_neovim() {
 
     # Install fonts
     echo "Installing fonts!"
-    sudo mkdir /usr/local/share/fonts
+    sudo mkdir -p /usr/local/share/fonts
     local FONTS=("FiraCode" "Hack" "SourceCodePro" "SpaceMono")
     pushd /usr/local/share/fonts
       for FONT in "${FONTS[@]}"; do
