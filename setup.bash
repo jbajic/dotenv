@@ -80,7 +80,7 @@ function _setup_bash() {
 
     sudo apt update && sudo apt upgrade -y
     sudo apt install -y fzf fd-find bat
-    ln -s $(which fdfind) ~/.local/bin/fd
+    ln -sf $(which fdfind) ~/.local/bin/fd
 
     echo "Create .shell directory in ${LOGNAME} home folder..."
     mkdir -p "${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}"
