@@ -69,10 +69,14 @@ function _check_for_sudo_privilages() {
 }
 
 function _setup_bash() {
-    echo "Create .shell directory in ${LOGNAME} home folder..."
+    echo "Create a .local/bin directory"
+    mkdir -p "${CALLER_HOME}/.local/bin"
+
     sudo apt update && sudo apt upgrade -y
     sudo apt install -y fzf fd-find bat
     ln -s $(which fdfind) ~/.local/bin/fd
+
+    echo "Create .shell directory in ${LOGNAME} home folder..."
     mkdir -p "${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}"
     echo "Moving all functions to ${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}..."
     cp -R functions/* "${SHELL_CONFIGURATION_FOLDER_FUNCTIONS}"
