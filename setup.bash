@@ -2,12 +2,13 @@
 set -euo pipefail
 
 function _help() {
-    echo "Script is used to setup basic bash enviroment."
+    echo "Script is used to setup basic bash environment."
     echo "It changes the theme of shell and give a basic set"
     echo "of commands that you can use!"
     echo "First argument must be type of shell to use:"
-    echo "bash"
-    echo "zsh"
+    echo "  bash"
+    echo "  zsh"
+    echo "And the second argument must be:"
     echo "  basic => Git & bash aliases"
     echo "  editor => Git, bash aliases, neovim"
     echo "  full => Git, bash aliases, neovim, i3 env"
@@ -226,6 +227,7 @@ case ${SETUP} in
     _setup_bash
     ;;
   editor)
+    _greeting
     _setup_bash
     _setup_git
     _setup_neovim
