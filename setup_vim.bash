@@ -1,7 +1,8 @@
 function _setup_neovim() {
     echo "Setting up neovim!"
     sudo apt update
-    sudo apt install curl unzip ripgrep fontconfig -y
+    # Fuse is for appimage
+    sudo apt install curl unzip ripgrep fontconfig fuse -y
 
     # Intall neovim from release pages
     echo "Installing neovim from release pages!"
