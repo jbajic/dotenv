@@ -76,7 +76,7 @@ function _check_for_sudo_privilages() {
 function _setup_bash() {
     echo "Create a .local/bin directory and .config"
     mkdir -p "${CALLER_HOME}/.local/bin"
-    mkdir -p "${CALLER_HOME}/.config
+    mkdir -p "${CALLER_HOME}/.config"
 
     sudo apt update && sudo apt upgrade -y
     sudo apt install -y fzf fd-find bat
