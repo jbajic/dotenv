@@ -5,9 +5,13 @@ function _help() {
     echo "Script is used to setup basic bash enviroment."
     echo "It changes the theme of shell and give a basic set"
     echo "of commands that you can use!"
-    echo "First argument must be type of shell to use zsh or bash"
+    echo "First argument must be type of shell to use:"
+    echo "bash"
+    echo "zsh"
     echo "  basic => Git & bash aliases"
+    echo "  editor => Git, bash aliases, neovim"
     echo "  full => Git, bash aliases, neovim, i3 env"
+    echo "Running something like this ./setup.bash bash full"
     exit 1
 }
 
