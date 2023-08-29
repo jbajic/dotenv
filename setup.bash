@@ -225,6 +225,7 @@ case ${SETUP} in
     _setup_bash
     _setup_git
     _setup_neovim
+    ;;
   full)
     _greeting
     _setup_git
