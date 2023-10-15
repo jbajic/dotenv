@@ -138,7 +138,7 @@ ${BEGIN_SOURCE}
 alias da='du -Sh | sort -h'
 alias source=source_venv
 alias ap=ansible-playbook
-alias cat=bat
+alias cat=batcat
 
 ${END_SOURCE}
 EOL

@@ -7,7 +7,7 @@ function _setup_neovim() {
     # Intall neovim from release pages
     echo "Installing neovim from release pages!"
     pushd ~/.local/bin/
-      curl -LO  https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+      curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
       chmod u+x nvim.appimage
       mv nvim.appimage nvim
     popd
