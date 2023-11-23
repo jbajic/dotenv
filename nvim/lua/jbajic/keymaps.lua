@@ -97,3 +97,4 @@ vim.keymap.set("n", "<leader>sfc", [[:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2
 -- under_score to PascalCase
 vim.keymap.set("n", "<leader>sfp", [[:s#_\(\l\)#\u\1#g]])
 
+vim.keymap.set("n", "<leader>ws", "<cmd>SymbolsOutline<CR>")

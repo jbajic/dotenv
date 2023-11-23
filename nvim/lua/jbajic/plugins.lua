@@ -106,6 +106,9 @@ return packer.startup(function(use)
   -- Tmux navigator
   use "christoomey/vim-tmux-navigator"
 
+  -- For symbols view
+  use 'simrat39/symbols-outline.nvim'
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
