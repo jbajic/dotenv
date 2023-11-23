@@ -27,6 +27,13 @@ function _setup_neovim() {
       sudo fc-cache -fv
     popd
 
+    # Install patched fonts to enable icons
+    curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.0/Hack.tar.xz > hack.tar.xz
+    tar -xvf hack.tar.gs -C hack
+    pushd hack
+      cp ./* /usr/share/fonts/Hack/
+    popd
+
     _command_finished
 }
 
