@@ -11,7 +11,8 @@ function _setup_neovim() {
       chmod u+x nvim.appimage
       mv nvim.appimage nvim
     popd
-    cp -r nvim ~/.config/nvim/
+    rm -rf ~/.config/nvim/
+    cp -r nvim ~/.config/
 
     # Install fonts
     echo "Installing fonts!"
