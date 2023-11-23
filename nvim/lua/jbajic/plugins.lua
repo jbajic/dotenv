@@ -48,7 +48,8 @@ return packer.startup(function(use)
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
 
   -- Colorscheme
-  use "folke/tokyonight.nvim"
+  --use "folke/tokyonight.nvim"
+  use { "catppuccin/nvim", as = "catppuccin" }
   use {
     "nvim-lualine/lualine.nvim",
     requires = { "nvim-tree/nvim-web-devicons" }
