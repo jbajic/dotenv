@@ -2,11 +2,7 @@ local fn = vim.fn
 
 -- Automatically install packer
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
-    "git",
-    "clone",
-    "--depth",
+if fn.empty(fn.glob(install_path)) > 0 then PACKER_BOOTSTRAP = fn.system { "git", "clone", "--depth",
     "1",
     "https://github.com/wbthomason/packer.nvim",
     install_path,
@@ -43,8 +39,8 @@ return packer.startup(function(use)
   use "wbthomason/packer.nvim"
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
-  use "kyazdani42/nvim-web-devicons"
-  use "kyazdani42/nvim-tree.lua"
+  use "nvim-tree/nvim-web-devicons"
+  use "nvim-tree/nvim-tree.lua"
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
 
   -- Colorscheme
@@ -83,15 +79,17 @@ return packer.startup(function(use)
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   -- Telescope
-    use {
-	  "nvim-telescope/telescope.nvim",
-	  requires = {
-		  {"nvim-lua/plenary.nvim"},
-		  {"nvim-telescope/telescope-live-grep-args.nvim"},
-	  },
-	  config = function()
-	      require("telescope").load_extension("live_grep_args")
-      end
+  use {"nvim-telescope/telescope-fzf-native.nvim", run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build" }
+  use {
+    "nvim-telescope/telescope.nvim",
+    --tag = "0.1.1",
+    requires = {
+      {"nvim-lua/plenary.nvim"},
+      {"nvim-telescope/telescope-live-grep-args.nvim"},
+    },
+    config = function()
+      require("telescope").load_extension("live_grep_args")
+    end
   }
   use "nvim-telescope/telescope-media-files.nvim"
 
@@ -102,13 +100,19 @@ return packer.startup(function(use)
   }
 
   -- Git control over files
-  use "lewis6991/gitsigns.nvim"
+  use {
+    "lewis6991/gitsigns.nvim",
+    tag = "v0.6"
+  }
 
-  -- Tmux navigator
-  use "christoomey/vim-tmux-navigator"
+  -- Markdown preview
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+
+  -- Integration with tmux
+  use { "alexghergh/nvim-tmux-navigation" }
 
   -- For symbols view
-  use 'simrat39/symbols-outline.nvim'
+use 'simrat39/symbols-outline.nvim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
