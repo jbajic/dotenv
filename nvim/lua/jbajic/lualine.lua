@@ -1,3 +1,18 @@
+local function get_current_context()
+  local f = require'nvim-treesitter'.statusline({
+    indicator_size = 90,
+    type_patterns = {"class", "function", "method", "interface", "struct", "impl"}
+  })
+  local context = string.format("%s", f) -- convert to string, it may be a empty ts node
+
+  if context == "vim.NIL" or string.len(context) == 0 then
+    return ""
+  end
+  local result = context:sub(1, context:find("(", 1, true) - 1)
+
+  return " " .. result
+end
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -20,7 +35,7 @@ require('lualine').setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_c = {'filename', get_current_context},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
