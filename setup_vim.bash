@@ -2,7 +2,9 @@ function _setup_neovim() {
     echo "Setting up neovim!"
     sudo apt update
     # Fuse is for appimage
-    sudo apt install curl unzip ripgrep fontconfig fuse -y
+    sudo apt install curl unzip ripgrep fontconfig fuse \
+      npm \ # needed for pyright installation
+      -y
 
     # Intall neovim from release pages
     echo "Installing neovim from release pages!"
