@@ -24,10 +24,11 @@ vim.g.maplocalleader = " "
 --[[keymap("n", "<C-j>", "<C-w>j", opts)]]
 --[[keymap("n", "<C-k>", "<C-w>k", opts)]]
 --[[keymap("n", "<C-l>", "<C-w>l", opts)]]
-keymap("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", opts)
-keymap("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", opts)
-keymap("n", "<C-l>", "<cmd> TmuxNavigateDown<CR>", opts)
-keymap("n", "<C-l>", "<cmd> TmuxNavigateUp<CR>", opts)
+local nvim_tmux_nav = require('nvim-tmux-navigation')
+keymap("n", "<C-h>", "<cmd> Tnvim_tmux_nav.muxNavigateLeft<CR>", opts)
+keymap("n", "<C-l>", "<cmd> Tmnvim_tmux_nav.uxNavigateRight<CR>", opts)
+keymap("n", "<C-l>", "<cmd> nvim_tmux_nav.TmuxNavigateDown<CR>", opts)
+keymap("n", "<C-l>", "<cmd> Tnvim_tmux_nav.muxNavigateUp<CR>", opts)
 
 -- keymap("n", "<leader>e", ":lex 30<cr>", opts)
 -- nvim-tree

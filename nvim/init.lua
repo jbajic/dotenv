@@ -10,4 +10,5 @@ require("jbajic.gitsigns")
 require("jbajic.nvim-tree")
 require("jbajic.lualine")
 require("jbajic.symbols")
+require("jbajic.tmuxnav")
 
