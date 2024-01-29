@@ -29,10 +29,12 @@ function _setup_neovim() {
 
     # Install patched fonts to enable icons
     curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.0/Hack.tar.xz > hack.tar.xz
-    tar -xvf hack.tar.gs -C hack
+    mkdir hack
+    tar -xvf hack.tar.xz -C hack
     pushd hack
-      cp ./* /usr/share/fonts/Hack/
+      sudo cp ./* /usr/share/fonts/
     popd
+    rm -rf hack
 
     _command_finished
 }

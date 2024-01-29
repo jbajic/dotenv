@@ -200,7 +200,7 @@ function _setup_alacritty() {
     sudo apt install alacritty
     sudo update-alternatives --config x-terminal-emulator
     mkdir -p ${CALLER_HOME}/.config/alacritty
-    cp configs/alacritty.yml ${CALLER_HOME}/.config/alacritty.yml
+    cp configs/alacritty.toml ${CALLER_HOME}/.config/alacritty.toml
     _command_finished
 }
 
@@ -209,10 +209,15 @@ function _setup_tmux() {
   sudo apt update && sudo apt upgrade -y
   sudo apt install -y tmux
   mkdir -p ${CALLER_HOME}/.config/tmux
-  cp configs/tmux.conf ${CALLER_HOME}/config/tmux/tmux.conf
+  cp configs/tmux.conf ${CALLER_HOME}/.config/tmux/tmux.conf
   _command_finished
 }
 
+
+function _prepare() {
+  mkdir -p ~/.config
+  sudo mkdir -p /usr/share/fonts
+}
 
 ########################
 #  Main Function
@@ -222,17 +227,20 @@ case ${SETUP} in
     _help
     ;;
   basic)
+    _prepare
     _greeting
     _setup_git
     _setup_bash
     ;;
   editor)
+    _prepare
     _greeting
     _setup_bash
     _setup_git
     _setup_neovim
     ;;
   full)
+    _prepare
     _greeting
     _setup_git
     _setup_neovim
