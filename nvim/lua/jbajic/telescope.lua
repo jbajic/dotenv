@@ -111,6 +111,7 @@ vim.keymap.set("n", "<leader>ps", function()
   builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
 vim.keymap.set("n", "<leader>fs", require("telescope").extensions.live_grep_args.live_grep_args, { noremap = true })
+vim.keymap.set("n", "<leader>fw", builtin.lsp_dynamic_workspace_symbols, { noremap = true })
 
 -- Without preview 
 vim.keymap.set("n", "<leader>fg", "<CMD>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<CR>", { noremap = true })

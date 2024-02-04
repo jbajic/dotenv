@@ -210,6 +210,12 @@ function _setup_tmux() {
   sudo apt install -y tmux
   mkdir -p ${CALLER_HOME}/.config/tmux
   cp configs/tmux.conf ${CALLER_HOME}/.config/tmux/tmux.conf
+  echo "Set up tmux plugin manager!"
+  pushd ${CALLER_HOME}
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    tmux source ${CALLER_HOME}/.config/tmux
+  popd
+
   _command_finished
 }
 
