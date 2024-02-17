@@ -235,6 +235,7 @@ function _setup_zoxide() {
 cat >> "${SHELL_CONFIGURATION_FILE}" <<EOL
 ${BEGIN_SOURCE}
 
+alias cd='echo "Use z!"'
 eval "$(zoxide init bash)"
 
 ${END_SOURCE}
