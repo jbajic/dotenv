@@ -139,6 +139,7 @@ alias da='du -Sh | sort -h'
 alias source=source_venv
 alias ap=ansible-playbook
 alias cat=batcat
+alias n='nvim .'
 
 ${END_SOURCE}
 EOL
@@ -219,6 +220,33 @@ function _setup_tmux() {
   _command_finished
 }
 
+function _setup_zoxide() {
+  echo "Setting up tmux!"
+  sudo apt update && sudo apt install -y curl
+  curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+
+  echo "Source system aliases!"
+  local BEGIN_SOURCE="#### ZOXIDE START"
+  local END_SOURCE="#### ZOXIDE END"
+  # Remove any previous sourcing
+  sed -i "/${BEGIN_SOURCE}/,/${END_SOURCE}/d" ${SHELL_CONFIGURATION_FILE}
+
+  if [[ -f "${SHELL_CONFIGURATION_FILE}" ]]; then
+cat >> "${SHELL_CONFIGURATION_FILE}" <<EOL
+${BEGIN_SOURCE}
+
+eval "$(zoxide init bash)"
+
+${END_SOURCE}
+EOL
+    else
+        echo "Bash configuration file not found!"
+        exit 1
+    fi
+
+  _command_finished
+}
+
 
 function _prepare() {
   mkdir -p ~/.config
@@ -252,6 +280,7 @@ case ${SETUP} in
     _setup_neovim
     _setup_bash
     _setup_env
+    _setup_zoxide
     ;;
   *)
     echo "Unrecognized argument!"
