@@ -2,7 +2,8 @@ local fn = vim.fn
 
 -- Automatically install packer
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then PACKER_BOOTSTRAP = fn.system { "git", "clone", "--depth",
+if fn.empty(fn.glob(install_path)) > 0 then
+  PACKER_BOOTSTRAP = fn.system { "git", "clone", "--depth",
     "1",
     "https://github.com/wbthomason/packer.nvim",
     install_path,
@@ -37,7 +38,7 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
   use "wbthomason/packer.nvim"
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
+  use "nvim-lua/popup.nvim"   -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
   use "nvim-tree/nvim-web-devicons"
   use "nvim-tree/nvim-tree.lua"
@@ -53,39 +54,39 @@ return packer.startup(function(use)
 
   -- lsp & cmp plugins
   use {
-	  "VonHeikemen/lsp-zero.nvim",
-	  branch = "v1.x",
-	  requires = {
-		  -- LSP Support
-		  {"neovim/nvim-lspconfig"},
-		  {"williamboman/mason.nvim"},
-		  {"williamboman/mason-lspconfig.nvim"},
+    "VonHeikemen/lsp-zero.nvim",
+    branch = "v1.x",
+    requires = {
+      -- LSP Support
+      { "neovim/nvim-lspconfig" },
+      { "williamboman/mason.nvim" },
+      { "williamboman/mason-lspconfig.nvim" },
 
-		  -- Autocompletion
-		  {"hrsh7th/nvim-cmp"},
-		  {"hrsh7th/cmp-buffer"},
-		  {"hrsh7th/cmp-path"},
-		  {"saadparwaiz1/cmp_luasnip"},
-		  {"hrsh7th/cmp-nvim-lsp"},
-		  {"hrsh7th/cmp-nvim-lua"},
-	  }
+      -- Autocompletion
+      { "hrsh7th/nvim-cmp" },
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-path" },
+      { "saadparwaiz1/cmp_luasnip" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-nvim-lua" },
+    }
   }
 
   -- Commenting and Uncommenting plugin
   use("preservim/nerdcommenter")
 
   -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
+  use "L3MON4D3/LuaSnip"             --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   -- Telescope
-  use {"nvim-telescope/telescope-fzf-native.nvim", run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build" }
+  use { "nvim-telescope/telescope-fzf-native.nvim", run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build" }
   use {
     "nvim-telescope/telescope.nvim",
     --tag = "0.1.1",
     requires = {
-      {"nvim-lua/plenary.nvim"},
-      {"nvim-telescope/telescope-live-grep-args.nvim"},
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope-live-grep-args.nvim" },
     },
     config = function()
       require("telescope").load_extension("live_grep_args")
@@ -106,13 +107,19 @@ return packer.startup(function(use)
   }
 
   -- Markdown preview
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = {
+      "markdown" } end, ft = { "markdown" }, })
 
   -- Integration with tmux
   use { "alexghergh/nvim-tmux-navigation" }
 
   -- For symbols view
-use 'simrat39/symbols-outline.nvim'
+  use 'simrat39/symbols-outline.nvim'
+
+
+  -- https://github.com/ThePrimeagen/harpoon
+  use 'ThePrimeagen/harpoon'
+
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
@@ -120,4 +127,3 @@ use 'simrat39/symbols-outline.nvim'
     require("packer").sync()
   end
 end)
-
