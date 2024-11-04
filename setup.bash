@@ -220,6 +220,7 @@ function _setup_tmux() {
   _command_finished
 }
 
+# Replaces z so you can enter directories which are far far away
 function _setup_zoxide() {
   echo "Setting up tmux!"
   sudo apt update && sudo apt install -y curl
@@ -235,8 +236,33 @@ function _setup_zoxide() {
 cat >> "${SHELL_CONFIGURATION_FILE}" <<EOL
 ${BEGIN_SOURCE}
 
-alias cd='echo "Use z!"'
+alias cd='z'
 eval "$(zoxide init bash)"
+
+${END_SOURCE}
+EOL
+    else
+        echo "Bash configuration file not found!"
+        exit 1
+    fi
+
+  _command_finished
+}
+
+# Replace dangerous rm with trash command
+function _setup_thrash() {
+  sudo apt update && sudo apt install -y trash-cli
+
+  local BEGIN_SOURCE="#### TRASH START"
+  local END_SOURCE="#### TRASH END"
+  # Remove any previous sourcing
+  sed -i "/${BEGIN_SOURCE}/,/${END_SOURCE}/d" ${SHELL_CONFIGURATION_FILE}
+
+  if [[ -f "${SHELL_CONFIGURATION_FILE}" ]]; then
+cat >> "${SHELL_CONFIGURATION_FILE}" <<EOL
+${BEGIN_SOURCE}
+
+alias rm='trash'
 
 ${END_SOURCE}
 EOL
@@ -282,6 +308,7 @@ case ${SETUP} in
     _setup_bash
     _setup_env
     _setup_zoxide
+    _setup_trash
     ;;
   *)
     echo "Unrecognized argument!"
