@@ -2,12 +2,12 @@ function _setup_neovim() {
     echo "Setting up neovim!"
     sudo apt update
     # Fuse is for appimage
-    sudo apt install curl unzip ripgrep fontconfig fuse \
-      npm \ # needed for pyright installation
-      -y
+    sudo apt install -y curl unzip ripgrep fontconfig fuse \
+      npm # needed for pyright installation
 
     # Intall neovim from release pages
     echo "Installing neovim from release pages!"
+    mkdir -p ~/.local/bin/
     pushd ~/.local/bin/
       curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
       chmod u+x nvim.appimage
@@ -40,4 +40,3 @@ function _setup_neovim() {
 
     _command_finished
 }
-

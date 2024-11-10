@@ -155,7 +155,7 @@ function _setup_env() {
     _setup_xrandr
     _setup_dunst
     _setup_alacritty
-    _setup_tmux
+    #_setup_tmux
 }
 
 function _setup_i3() {
@@ -198,7 +198,7 @@ function _setup_alacritty() {
     sudo apt update && sudo apt upgrade -y
     sudo add-apt-repository ppa:aslatter/ppa -y
     sudo apt update
-    sudo apt install alacritty
+    sudo apt install -y alacritty
     sudo update-alternatives --config x-terminal-emulator
     mkdir -p ${CALLER_HOME}/.config/alacritty
     cp configs/alacritty.toml ${CALLER_HOME}/.config/alacritty.toml
@@ -222,7 +222,7 @@ function _setup_tmux() {
 
 # Replaces z so you can enter directories which are far far away
 function _setup_zoxide() {
-  echo "Setting up tmux!"
+  echo "Setting up zoxide!"
   sudo apt update && sudo apt install -y curl
   curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 
@@ -235,10 +235,8 @@ function _setup_zoxide() {
   if [[ -f "${SHELL_CONFIGURATION_FILE}" ]]; then
 cat >> "${SHELL_CONFIGURATION_FILE}" <<EOL
 ${BEGIN_SOURCE}
-
-alias cd='z'
 eval "$(zoxide init bash)"
-
+alias cd='z'
 ${END_SOURCE}
 EOL
     else
@@ -250,7 +248,7 @@ EOL
 }
 
 # Replace dangerous rm with trash command
-function _setup_thrash() {
+function _setup_trash() {
   sudo apt update && sudo apt install -y trash-cli
 
   local BEGIN_SOURCE="#### TRASH START"
@@ -301,12 +299,12 @@ case ${SETUP} in
     _setup_neovim
     ;;
   full)
-    _prepare
-    _greeting
-    _setup_git
-    _setup_neovim
-    _setup_bash
-    _setup_env
+    #_prepare
+    #_greeting
+    #_setup_git
+    #_setup_neovim
+    #_setup_bash
+    #_setup_env
     _setup_zoxide
     _setup_trash
     ;;
