@@ -24,11 +24,10 @@ vim.g.maplocalleader = " "
 --[[keymap("n", "<C-j>", "<C-w>j", opts)]]
 --[[keymap("n", "<C-k>", "<C-w>k", opts)]]
 --[[keymap("n", "<C-l>", "<C-w>l", opts)]]
-local nvim_tmux_nav = require('nvim-tmux-navigation')
-keymap("n", "<C-h>", "<cmd> Tnvim_tmux_nav.muxNavigateLeft<CR>", opts)
-keymap("n", "<C-l>", "<cmd> Tmnvim_tmux_nav.uxNavigateRight<CR>", opts)
-keymap("n", "<C-l>", "<cmd> nvim_tmux_nav.TmuxNavigateDown<CR>", opts)
-keymap("n", "<C-l>", "<cmd> Tnvim_tmux_nav.muxNavigateUp<CR>", opts)
+keymap("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", opts)
+keymap("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", opts)
+keymap("n", "<C-l>", "<cmd> TmuxNavigateDown<CR>", opts)
+keymap("n", "<C-l>", "<cmd> TmuxNavigateUp<CR>", opts)
 
 -- keymap("n", "<leader>e", ":lex 30<cr>", opts)
 -- nvim-tree
@@ -40,9 +39,6 @@ keymap("n", "<C-Down>", ":resize -2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
--- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Insert --
 -- Press jk fast to enter
@@ -74,28 +70,32 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Custom --
-vim.keymap.set("n", "<leader><leader>", function()
-  vim.cmd("so")
-end)
 
 -- Execute current file
 vim.keymap.set("n", "<F5>", function()
 	vim.cmd(":!%:p")
 end)
 
--- Search visual selected file
+-- Search vidtulesual selected file
 mapping_string = "y/\\V<C-r>=escape(@\",'/\\\\')<CR><CR>"
 vim.keymap.set('v', '//', mapping_string)
 
 -- Custom scripts for building TODO(jbajic) write a function that detets
 -- and runs appropriate tool
-vim.keymap.set("n", "<leader>rb", "<cmd>!cargo build<CR>")
-vim.keymap.set("n", "<leader>rf", "<cmd>!cargo fmt<CR>")
+vim.keymap.set("n", "<leader>rb", "<cmd>!cargo build<CR>", opts)
 
 -- Remaps for quick text formatting
 -- under_score to camelCase
-vim.keymap.set("n", "<leader>sfc", [[:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2#g]])
+vim.keymap.set("n", "<leader>sfc", [[:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2#g]], opts)
 -- under_score to PascalCase
-vim.keymap.set("n", "<leader>sfp", [[:s#_\(\l\)#\u\1#g]])
+vim.keymap.set("n", "<leader>sfp", [[:s#_\(\l\)#\u\1#g]], opts)
 
-vim.keymap.set("n", "<leader>ws", "<cmd>SymbolsOutline<CR>")
+vim.keymap.set("n", "<leader>ws", "<cmd>SymbolsOutline<CR>", opts)
+
+-- Controlling tabs
+vim.keymap.set("n", "]t", ":tabnext<CR>", opts)
+vim.keymap.set("n", "[t", ":tabprev<CR>", opts)
+-- Navigate buffers
+vim.keymap.set("n", "]b", ":bnext<CR>", opts)
+vim.keymap.set("n", "[b", ":bnext<CR>", opts)
+
