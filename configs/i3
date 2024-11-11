@@ -206,6 +206,9 @@ bindsym $mod+x mode "$mode_system"
 # Launch polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
+# Launch compositor, fixes zoom display bugs
+exec_always --no-startup-id xcompmgr -c -l0 -t0 -r0 -o.00
+
 # Change keyboard layout
 # exec_always "setxkbmap -layout hr"
 exec "setxkbmap -layout us"

@@ -161,7 +161,7 @@ function _setup_env() {
 function _setup_i3() {
     echo "Setting up i3 config"
     sudo apt update
-    sudo apt install -y i3 i3lock i3-wm
+    sudo apt install -y i3 i3lock i3-wm xcompmgr
     mkdir -p ${CALLER_HOME}/.config/i3/scripts
     cp configs/i3 ${CALLER_HOME}/.config/i3/config
     cp configs/i3exit ${CALLER_HOME}/.config/i3/scripts/i3exit
