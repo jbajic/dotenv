@@ -139,7 +139,7 @@ alias da='du -Sh | sort -h'
 alias source=source_venv
 alias ap=ansible-playbook
 alias cat=batcat
-alias n='nvim .'
+alias n='nvim'
 
 ${END_SOURCE}
 EOL
@@ -299,12 +299,12 @@ case ${SETUP} in
     _setup_neovim
     ;;
   full)
-    #_prepare
-    #_greeting
-    #_setup_git
-    #_setup_neovim
-    #_setup_bash
-    #_setup_env
+    _prepare
+    _greeting
+    _setup_git
+    _setup_neovim
+    _setup_bash
+    _setup_env
     _setup_zoxide
     _setup_trash
     ;;
