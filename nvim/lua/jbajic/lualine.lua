@@ -13,6 +13,15 @@ local function get_current_context()
   return " " .. result
 end
 
+local treesitter = require('nvim-treesitter')
+local function treelocation()
+  return " " .. treesitter.statusline({
+    indicator_size = 70,
+    type_patterns = {'class', 'function', 'method'},
+    separator = ' -> '
+  })
+end
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -35,7 +44,7 @@ require('lualine').setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename', get_current_context},
+    lualine_c = {'filename', treelocation},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
