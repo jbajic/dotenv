@@ -272,6 +272,10 @@ EOL
   _command_finished
 }
 
+function _setup_backup() {
+  rm -rf ${CALLER_HOME}/.anacron
+  cp -R anacron ${CALLER_HOME}/.anacron
+}
 
 function _prepare() {
   mkdir -p ~/.config
@@ -307,6 +311,7 @@ case ${SETUP} in
     _setup_env
     _setup_zoxide
     _setup_trash
+    _setup_backup
     ;;
   *)
     echo "Unrecognized argument!"
