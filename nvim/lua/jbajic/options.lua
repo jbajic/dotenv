@@ -44,3 +44,7 @@ vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
 vim.opt.spelllang = "en_us"
 vim.opt.spellsuggest = "best,9"
 vim.opt.spell = true
+vim.opt.wrap = true
+
+-- For avantgarde https://github.com/yetone/avante.nvim 
+vim.opt.laststatus = 3

@@ -1,5 +1,5 @@
 local colorscheme = "catppuccin"
-require("catppuccin").setup({
+require(colorscheme).setup({
     flavour = "frappe", -- latte, frappe, macchiato, mocha
     background = { -- :h background
         light = "latte",

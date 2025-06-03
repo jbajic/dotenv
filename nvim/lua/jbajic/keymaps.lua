@@ -78,24 +78,30 @@ end)
 
 -- Search vidtulesual selected file
 mapping_string = "y/\\V<C-r>=escape(@\",'/\\\\')<CR><CR>"
-vim.keymap.set('v', '//', mapping_string)
+keymap('v', '//', mapping_string, term_opts)
 
 -- Custom scripts for building TODO(jbajic) write a function that detets
 -- and runs appropriate tool
-vim.keymap.set("n", "<leader>rb", "<cmd>!cargo build<CR>", opts)
+keymap("n", "<leader>rb", "<cmd>!cargo build<CR>", opts)
 
 -- Remaps for quick text formatting
 -- under_score to camelCase
-vim.keymap.set("n", "<leader>sfc", [[:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2#g]], opts)
+keymap("n", "<leader>sfc", [[:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2#g]], opts)
 -- under_score to PascalCase
-vim.keymap.set("n", "<leader>sfp", [[:s#_\(\l\)#\u\1#g]], opts)
+keymap("n", "<leader>sfp", [[:s#_\(\l\)#\u\1#g]], opts)
 
-vim.keymap.set("n", "<leader>ws", "<cmd>SymbolsOutline<CR>", opts)
+keymap("n", "<leader>ws", "<cmd>SymbolsOutline<CR>", opts)
 
 -- Controlling tabs
-vim.keymap.set("n", "]t", ":tabnext<CR>", opts)
-vim.keymap.set("n", "[t", ":tabprev<CR>", opts)
--- Navigate buffers
-vim.keymap.set("n", "]b", ":bnext<CR>", opts)
-vim.keymap.set("n", "[b", ":bnext<CR>", opts)
+keymap("n", "]t", ":tabnext<CR>", opts)
+keymap("n", "[t", ":tabprev<CR>", opts)
 
+keymap("n", "<leader>tn", ":tabnew %<CR>", opts)
+keymap("n", "<leader>tc", ":tabclose<CR>", opts)
+
+-- Navigate buffers
+keymap("n", "]b", ":bnext<CR>", opts)
+keymap("n", "[b", ":bnext<CR>", opts)
+
+-- Lazy git
+keymap("n", "<leader>gg", "<cmd>LazyGit<CR>", opts)

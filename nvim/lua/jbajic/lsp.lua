@@ -1,23 +1,81 @@
--- LSP setup
-local lsp = require("lsp-zero").preset({"recommended"})
+-- note: diagnostics are not exclusive to lsp servers
+-- so these can be global keybindings
+vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>') 
 
-lsp.ensure_installed({
-  -- Replace these with whatever servers you want to install
-  "rust_analyzer",
-  "clangd",
-  "pyright",
-  "lua_ls",
-  "luau_lsp",
+
+-- Add the same capabilities to ALL server configurations.
+-- Refer to :h vim.lsp.config() for more information.
+vim.lsp.config("*", {
+  capabilities = vim.lsp.protocol.make_client_capabilities()
 })
 
--- Fix Undefined global 'vim'
-lsp.nvim_workspace()
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    -- Replace these with whatever servers you want to install
+    "rust_analyzer",
+    "clangd",
+    "pyright",
+    "lua_ls",
+    "luau_lsp",
+    "eslint",
+  },
+  automatic_enabel = true,
+})
 
-lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
+
+vim.lsp.enable({
+    "rust_analyzer",
+    "clangd",
+    "pyright",
+    "lua_ls",
+    "eslint",
+ })
+
+vim.diagnostic.config({
+    virtual_lines = false,
+    virtual_text = {
+      spacing = 4,
+      prefix = "●",
+      severity = vim.diagnostic.severity.ERROR,
+    },
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+    float = {
+        border = "rounded",
+        source = true,
+    },
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "󰅚 ",
+            [vim.diagnostic.severity.WARN] = "󰀪 ",
+            [vim.diagnostic.severity.INFO] = "󰋽 ",
+            [vim.diagnostic.severity.HINT] = "󰌶 ",
+        },
+        numhl = {
+            [vim.diagnostic.severity.ERROR] = "ErrorMsg",
+            [vim.diagnostic.severity.WARN] = "WarningMsg",
+        },
+    },
+})
+
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP actions',
+  callback = function(args)
+
+    -- these will be buffer-local keybindings
+    -- because they only work if you have an active language server
+
+  --vim.lsp.default_keymaps({buffer = bufnr})
+  --local opts = {buffer = args.buf, noremap = true}
   local opts = {buffer = true, noremap = true}
+  --local opts = {buffer = true, noremap = true}
 
-  vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+  vim.keymap.set('n', 'K', require("hover").hover, {desc = "hover.nvim"})
   vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
   vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
   vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
@@ -31,33 +89,10 @@ lsp.on_attach(function(client, bufnr)
 
   vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
   vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
-end)
+  end
+})
 
-lsp.setup()
 
--- You need to setup `cmp` after lsp-zero
-local cmp = require("cmp")
-local cmp_action = require("lsp-zero").cmp_action()
-
--- cmp setup
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-  return
-end
-
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then
-  return
-end
-
-require("luasnip/loaders/from_vscode").lazy_load()
-
-local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-end
-
--- Some icons from Hack Nerd Font Mono
 local kind_icons = {
   Text = "󰦨",
   Method = "m",
@@ -85,9 +120,15 @@ local kind_icons = {
   Operator = "󱓉",
   TypeParameter = "󰊄",
 }
--- find more here: https://www.nerdfonts.com/cheat-sheet
 
-cmp.setup {
+local luasnip = require("luasnip")
+local check_backspace = function()
+  local col = vim.fn.col "." - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+end
+
+local cmp = require("cmp")
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -170,5 +211,4 @@ cmp.setup {
     ghost_text = false,
     native_menu = false,
   },
-}
-
+})

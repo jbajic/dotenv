@@ -1,16 +1,17 @@
 local fn = vim.fn
 
--- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system { "git", "clone", "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  }
-  print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packadd packer.nvim]]
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
+
+local packer_bootstrap = ensure_packer()
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd [[
@@ -53,24 +54,16 @@ return packer.startup(function(use)
   }
 
   -- lsp & cmp plugins
-  use {
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v1.x",
-    requires = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" },
-      { "williamboman/mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
-
-      -- Autocompletion
-      { "hrsh7th/nvim-cmp" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-path" },
-      { "saadparwaiz1/cmp_luasnip" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-nvim-lua" },
-    }
-  }
+  use { "neovim/nvim-lspconfig" }
+  use { "williamboman/mason.nvim" }
+  use { "williamboman/mason-lspconfig.nvim" }
+  use { "saadparwaiz1/cmp_luasnip" }
+  use { "hrsh7th/nvim-cmp" }
+  use { "hrsh7th/cmp-buffer" }
+  use { "hrsh7th/cmp-path" }
+  use { "hrsh7th/cmp-nvim-lsp" }
+  use { "hrsh7th/cmp-nvim-lua" }
+  use {"lewis6991/hover.nvim" }
 
   -- Commenting and Uncommenting plugin
   use("preservim/nerdcommenter")
@@ -116,10 +109,39 @@ return packer.startup(function(use)
   -- For symbols view
   use 'simrat39/symbols-outline.nvim'
 
-
   -- https://github.com/ThePrimeagen/harpoon
   use 'ThePrimeagen/harpoon'
 
+  use({
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    requires = {
+        "nvim-lua/plenary.nvim",
+    },
+})
+
+--[[  -- For Avante]]
+  --[[--use 'nvim-treesitter/nvim-treesitter']]
+  --[[use 'stevearc/dressing.nvim']]
+  --[[--use 'nvim-lua/plenary.nvim']]
+  --[[use 'MunifTanjim/nui.nvim']]
+  --[[use 'MeanderingProgrammer/render-markdown.nvim']]
+
+  --[[-- Optional dependencies]]
+  --[[--use 'hrsh7th/nvim-cmp']]
+  --[[--use 'nvim-tree/nvim-web-devicons' -- or use 'echasnovski/mini.icons']]
+  --[[use 'HakonHarnes/img-clip.nvim']]
+  --[[use 'zbirenbaum/copilot.lua']]
+
+  --[[-- Avante.nvim with build process]]
+  --[[use {]]
+    --[['yetone/avante.nvim',]]
+    --[[branch = 'main',]]
+    --[[run = 'make',]]
+    --[[config = function()]]
+      --[[require('avante').setup()]]
+    --[[end]]
+  --[[}]]
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
