@@ -105,3 +105,4 @@ keymap("n", "[b", ":bnext<CR>", opts)
 
 -- Lazy git
 keymap("n", "<leader>gg", "<cmd>LazyGit<CR>", opts)
+

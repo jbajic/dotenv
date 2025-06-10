@@ -1,7 +1,7 @@
 
 local configs = require("nvim-treesitter.configs")
 configs.setup {
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "rust", "cpp", "python" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "rust", "cpp", "python", "javascript" },
   auto_install = true,
   sync_install = false,
   ignore_install = { "" }, -- List of parsers to ignore installing

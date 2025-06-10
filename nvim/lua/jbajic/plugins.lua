@@ -107,7 +107,8 @@ return packer.startup(function(use)
   use { "alexghergh/nvim-tmux-navigation" }
 
   -- For symbols view
-  use 'simrat39/symbols-outline.nvim'
+  --Previously used  'simrat39/symbols-outline.nvim', then it forked into
+  use 'hedyhli/outline.nvim'
 
   -- https://github.com/ThePrimeagen/harpoon
   use 'ThePrimeagen/harpoon'
