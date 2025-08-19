@@ -48,3 +48,6 @@ vim.opt.wrap = true
 
 -- For avantgarde https://github.com/yetone/avante.nvim 
 vim.opt.laststatus = 3
+
+-- Enable inlay hints by default
+vim.lsp.inlay_hint.enable()

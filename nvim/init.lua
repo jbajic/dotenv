@@ -13,5 +13,6 @@ require("jbajic.tmuxnav")
 require("jbajic.harpoon")
 require("jbajic.hover")
 require("jbajic.lsp")
+require("jbajic.cursor")
 --require("jbajic.avante")
 

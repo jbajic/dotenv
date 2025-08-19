@@ -90,7 +90,7 @@ keymap("n", "<leader>sfc", [[:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2#g]], op
 -- under_score to PascalCase
 keymap("n", "<leader>sfp", [[:s#_\(\l\)#\u\1#g]], opts)
 
-keymap("n", "<leader>ws", "<cmd>SymbolsOutline<CR>", opts)
+keymap("n", "<leader>ws", "<cmd>OutlineOpen<CR>", opts)
 
 -- Controlling tabs
 keymap("n", "]t", ":tabnext<CR>", opts)
@@ -106,3 +106,14 @@ keymap("n", "[b", ":bnext<CR>", opts)
 -- Lazy git
 keymap("n", "<leader>gg", "<cmd>LazyGit<CR>", opts)
 
+vim.api.nvim_create_user_command('ToggleHints', function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, {})
+
+-- CursorAgent
+-- Toggle the interactive terminal
+keymap("n", "<leader>ca", ":CursorAgent<CR>", { desc = "Cursor Agent: Toggle terminal" })
+-- Ask about the visual selection
+keymap("v", "<leader>ca", ":CursorAgentSelection<CR>", { desc = "Cursor Agent: Send selection" })
+-- Ask about the current buffer
+keymap("n", "<leader>cA", ":CursorAgentBuffer<CR>", { desc = "Cursor Agent: Send buffer" })

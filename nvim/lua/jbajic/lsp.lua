@@ -2,13 +2,15 @@
 -- so these can be global keybindings
 vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
-vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>') 
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
 
 
 -- Add the same capabilities to ALL server configurations.
 -- Refer to :h vim.lsp.config() for more information.
 vim.lsp.config("*", {
-  capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = vim.lsp.protocol.make_client_capabilities({
+    inlay_hints = { enabled = true } -- This is where inlay hints should be enabled
+  }),
 })
 
 require('mason').setup({})
@@ -22,7 +24,7 @@ require('mason-lspconfig').setup({
     "luau_lsp",
     "eslint",
   },
-  automatic_enabel = true,
+  automatic_enable = true,
 })
 
 

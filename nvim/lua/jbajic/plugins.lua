@@ -119,7 +119,23 @@ return packer.startup(function(use)
     requires = {
         "nvim-lua/plenary.nvim",
     },
-})
+  })
+
+  use({
+    "xTacobaco/cursor-agent.nvim",
+    config = function()
+      require("cursor-agent").setup({})
+    end,
+  })
+
+  use {
+    "rmagatti/auto-session",
+    config = function()
+      require("auto-session").setup {
+        suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      }
+    end,
+  }
 
 --[[  -- For Avante]]
   --[[--use 'nvim-treesitter/nvim-treesitter']]
@@ -143,6 +159,8 @@ return packer.startup(function(use)
       --[[require('avante').setup()]]
     --[[end]]
   --[[}]]
+
+  use 'jbajic/aql-syntax-vim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
