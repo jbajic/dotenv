@@ -80,15 +80,18 @@ telescope.setup {
       },
     },
   },
-  -- pickers = {
+   pickers = {
     -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
-  -- },
+    live_grep = {
+      layout_strategy = "vertical",
+    },
+    find_files = {
+      --theme = "dropdown",
+      find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+      --find_command = { "fd" }
+    },
+    previewer = false,
+  },
   extensions = {
     media_files = {
         -- filetypes whitelist
@@ -106,13 +109,14 @@ telescope.setup {
 
 -- Telescope shortcuts
 local builtin = require('telescope.builtin')
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+vim.keymap.set("n", "<leader>ff", builtin.find_files, {desc = 'Telescope find files'})
 vim.keymap.set("n", "<leader>ps", function()
   builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
 vim.keymap.set("n", "<leader>fs", require("telescope").extensions.live_grep_args.live_grep_args, { noremap = true })
 vim.keymap.set("n", "<leader>fw", builtin.lsp_dynamic_workspace_symbols, { noremap = true })
+vim.keymap.set('n', '<leader>fg', builtin.git_status, { desc = 'Git status' })
 
--- Without preview 
-vim.keymap.set("n", "<leader>fg", "<CMD>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<CR>", { noremap = true })
+-- Without preview
+--vim.keymap.set("n", "<leader>fg", "<CMD>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<CR>", { noremap = true })
 

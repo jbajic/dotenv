@@ -20,14 +20,14 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
---[[keymap("n", "<C-h>", "<C-w>h", opts)]]
---[[keymap("n", "<C-j>", "<C-w>j", opts)]]
---[[keymap("n", "<C-k>", "<C-w>k", opts)]]
---[[keymap("n", "<C-l>", "<C-w>l", opts)]]
-keymap("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", opts)
-keymap("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", opts)
-keymap("n", "<C-l>", "<cmd> TmuxNavigateDown<CR>", opts)
-keymap("n", "<C-l>", "<cmd> TmuxNavigateUp<CR>", opts)
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
+--keymap("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", opts)
+--keymap("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", opts)
+--keymap("n", "<C-l>", "<cmd> TmuxNavigateDown<CR>", opts)
+--keymap("n", "<C-l>", "<cmd> TmuxNavigateUp<CR>", opts)
 
 -- keymap("n", "<leader>e", ":lex 30<cr>", opts)
 -- nvim-tree
@@ -106,14 +106,12 @@ keymap("n", "[b", ":bnext<CR>", opts)
 -- Lazy git
 keymap("n", "<leader>gg", "<cmd>LazyGit<CR>", opts)
 
-vim.api.nvim_create_user_command('ToggleHints', function()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, {})
+--[[vim.api.nvim_create_user_command('ToggleHints', function()]]
+  --[[vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())]]
+--[[end, {})]]
 
--- CursorAgent
--- Toggle the interactive terminal
-keymap("n", "<leader>ca", ":CursorAgent<CR>", { desc = "Cursor Agent: Toggle terminal" })
--- Ask about the visual selection
-keymap("v", "<leader>ca", ":CursorAgentSelection<CR>", { desc = "Cursor Agent: Send selection" })
--- Ask about the current buffer
-keymap("n", "<leader>cA", ":CursorAgentBuffer<CR>", { desc = "Cursor Agent: Send buffer" })
+-- ClaudeCode keymaps are configured in lua/jbajic/claude.lua
+-- Default keymaps:
+--   <C-,> in normal/terminal mode: Toggle ClaudeCode
+--   <leader>cC: Continue last conversation
+--   <leader>cV: Start with verbose mode

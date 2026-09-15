@@ -1,25 +1,31 @@
-local function get_current_context()
-  local f = require'nvim-treesitter'.statusline({
-    indicator_size = 90,
-    type_patterns = {"class", "function", "method", "interface", "struct", "impl"}
-  })
-  local context = string.format("%s", f) -- convert to string, it may be a empty ts node
-
-  if context == "vim.NIL" or string.len(context) == 0 then
+-- Walks up from the cursor node and shows the enclosing class/function header.
+local context_node_types = { class = true, ["function"] = true, method = true }
+local function treelocation()
+  local ok, node = pcall(vim.treesitter.get_node)
+  if not ok or not node then
     return ""
   end
-  local result = context:sub(1, context:find("(", 1, true) - 1)
-
-  return " " .. result
-end
-
-local treesitter = require('nvim-treesitter')
-local function treelocation()
-  return " " .. treesitter.statusline({
-    indicator_size = 70,
-    type_patterns = {'class', 'function', 'method'},
-    separator = ' -> '
-  })
+  local parts = {}
+  while node do
+    local kind = node:type()
+    for pattern in pairs(context_node_types) do
+      if kind:find(pattern, 1, true) then
+        local row = node:start()
+        local line = vim.api.nvim_buf_get_lines(0, row, row + 1, false)[1] or ""
+        table.insert(parts, 1, vim.trim(line))
+        break
+      end
+    end
+    node = node:parent()
+  end
+  if #parts == 0 then
+    return ""
+  end
+  local text = table.concat(parts, " -> ")
+  if #text > 70 then
+    text = text:sub(1, 67) .. "..."
+  end
+  return " " .. text
 end
 
 require('lualine').setup {

@@ -154,7 +154,7 @@ require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
     show_on_dirs = true,
     show_on_open_dirs = true,
     disable_for_dirs = {},
-    timeout = 400,
+    timeout = 10000, -- Default is 400
     cygwin_support = false,
   },
   diagnostics = {

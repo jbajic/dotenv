@@ -1,170 +1,113 @@
-local fn = vim.fn
-
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  local out = vim.fn.system({
+    "git", "clone", "--filter=blob:none", "--branch=stable",
+    "https://github.com/folke/lazy.nvim.git", lazypath,
+  })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({ { "Failed to clone lazy.nvim:\n" .. out, "ErrorMsg" } }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
   end
-  return false
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]]
-
--- Use a protected call so we don"t error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
-
--- Have packer use a popup window
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
-
--- Install your plugins here
-return packer.startup(function(use)
-  use "wbthomason/packer.nvim"
-  use "nvim-lua/popup.nvim"   -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
-  use "nvim-tree/nvim-web-devicons"
-  use "nvim-tree/nvim-tree.lua"
-  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+require("lazy").setup({
+  "nvim-lua/popup.nvim",   -- An implementation of the Popup API from vim in Neovim
+  "nvim-lua/plenary.nvim", -- Useful lua functions used by lots of plugins
+  "nvim-tree/nvim-web-devicons",
+  "nvim-tree/nvim-tree.lua",
+  "windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
 
   -- Colorscheme
-  --use "folke/tokyonight.nvim"
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use {
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
     "nvim-lualine/lualine.nvim",
-    requires = { "nvim-tree/nvim-web-devicons" }
-  }
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 
   -- lsp & cmp plugins
-  use { "neovim/nvim-lspconfig" }
-  use { "williamboman/mason.nvim" }
-  use { "williamboman/mason-lspconfig.nvim" }
-  use { "saadparwaiz1/cmp_luasnip" }
-  use { "hrsh7th/nvim-cmp" }
-  use { "hrsh7th/cmp-buffer" }
-  use { "hrsh7th/cmp-path" }
-  use { "hrsh7th/cmp-nvim-lsp" }
-  use { "hrsh7th/cmp-nvim-lua" }
-  use {"lewis6991/hover.nvim" }
+  "neovim/nvim-lspconfig",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "saadparwaiz1/cmp_luasnip",
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-nvim-lua",
+  "lewis6991/hover.nvim",
 
   -- Commenting and Uncommenting plugin
-  use("preservim/nerdcommenter")
+  "preservim/nerdcommenter",
 
   -- snippets
-  use "L3MON4D3/LuaSnip"             --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+  "L3MON4D3/LuaSnip",             -- snippet engine
+  "rafamadriz/friendly-snippets", -- a bunch of snippets to use
 
   -- Telescope
-  use { "nvim-telescope/telescope-fzf-native.nvim", run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build" }
-  use {
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+  },
+  {
     "nvim-telescope/telescope.nvim",
-    --tag = "0.1.1",
-    requires = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope-live-grep-args.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim",
     },
     config = function()
       require("telescope").load_extension("live_grep_args")
-    end
-  }
-  use "nvim-telescope/telescope-media-files.nvim"
+    end,
+  },
+  "nvim-telescope/telescope-media-files.nvim",
 
   -- Treesitter
-  use {
+  {
     "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-  }
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
+  },
 
   -- Git control over files
-  use {
-    "lewis6991/gitsigns.nvim",
-    tag = "v0.6"
-  }
+  { "lewis6991/gitsigns.nvim", tag = "v0.6" },
 
-  -- Markdown preview
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = {
-      "markdown" } end, ft = { "markdown" }, })
-
-  -- Integration with tmux
-  use { "alexghergh/nvim-tmux-navigation" }
+  -- install without yarn or npm
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && npm install",
+    init = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+  },
 
   -- For symbols view
-  --Previously used  'simrat39/symbols-outline.nvim', then it forked into
-  use 'hedyhli/outline.nvim'
+  -- Previously used 'simrat39/symbols-outline.nvim', then it forked into
+  "hedyhli/outline.nvim",
 
   -- https://github.com/ThePrimeagen/harpoon
-  use 'ThePrimeagen/harpoon'
+  "ThePrimeagen/harpoon",
 
-  use({
+  {
     "kdheepak/lazygit.nvim",
-    -- optional for floating window border decoration
-    requires = {
-        "nvim-lua/plenary.nvim",
-    },
-  })
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
-  use({
-    "xTacobaco/cursor-agent.nvim",
-    config = function()
-      require("cursor-agent").setup({})
-    end,
-  })
-
-  use {
+  {
     "rmagatti/auto-session",
-    config = function()
-      require("auto-session").setup {
-        suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-      }
-    end,
-  }
+    opts = {
+      suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+    },
+  },
 
---[[  -- For Avante]]
-  --[[--use 'nvim-treesitter/nvim-treesitter']]
-  --[[use 'stevearc/dressing.nvim']]
-  --[[--use 'nvim-lua/plenary.nvim']]
-  --[[use 'MunifTanjim/nui.nvim']]
-  --[[use 'MeanderingProgrammer/render-markdown.nvim']]
+  "folke/snacks.nvim",
+  {
+    "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+  },
 
-  --[[-- Optional dependencies]]
-  --[[--use 'hrsh7th/nvim-cmp']]
-  --[[--use 'nvim-tree/nvim-web-devicons' -- or use 'echasnovski/mini.icons']]
-  --[[use 'HakonHarnes/img-clip.nvim']]
-  --[[use 'zbirenbaum/copilot.lua']]
-
-  --[[-- Avante.nvim with build process]]
-  --[[use {]]
-    --[['yetone/avante.nvim',]]
-    --[[branch = 'main',]]
-    --[[run = 'make',]]
-    --[[config = function()]]
-      --[[require('avante').setup()]]
-    --[[end]]
-  --[[}]]
-
-  use 'jbajic/aql-syntax-vim'
-
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
-end)
+  "jbajic/aql-syntax-vim",
+}, {
+  ui = { border = "rounded" },
+  change_detection = { notify = false },
+})

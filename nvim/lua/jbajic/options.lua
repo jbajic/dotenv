@@ -26,7 +26,7 @@ vim.opt.shiftwidth = 2                          -- the number of spaces inserted
 vim.opt.tabstop = 2                             -- insert 2 spaces for a tab
 vim.opt.cursorline = false                       -- highlight the current line
 vim.opt.number = true                           -- set numbered lines
-vim.opt.relativenumber = true                  -- set relative numbered lines
+vim.opt.relativenumber = false                  -- set relative numbered lines
 vim.opt.numberwidth = 4                         -- set number column width to 2 {default 4}
 vim.opt.signcolumn = "yes"                      -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false                            -- display lines as one long line
@@ -46,8 +46,18 @@ vim.opt.spellsuggest = "best,9"
 vim.opt.spell = true
 vim.opt.wrap = true
 
--- For avantgarde https://github.com/yetone/avante.nvim 
+-- For avantgarde https://github.com/yetone/avante.nvim
 vim.opt.laststatus = 3
 
 -- Enable inlay hints by default
 vim.lsp.inlay_hint.enable()
+
+--[[vim.api.nvim_create_autocmd("BufWritePre", {]]
+  --[[pattern = "*",]]
+  --[[callback = function()]]
+    --[[local save = vim.fn.winsaveview()]]
+    --[>vim.cmd([[%s/\s\+$//e]])<]
+    --[[vim.fn.winrestview(save)]]
+  --[[end,]]
+--[[})]]
+
