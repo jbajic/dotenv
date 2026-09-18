@@ -152,6 +152,7 @@ EOL
 function _setup_env() {
     _setup_i3
     _setup_polybar
+    _setup_backrest
     _setup_xrandr
     _setup_dunst
     _setup_alacritty
@@ -172,9 +173,17 @@ function _setup_polybar() {
     echo "Setting up polybar config"
     sudo apt update
     sudo apt install polybar imagemagick -y
-    mkdir -p ${CALLER_HOME}/.config/polybar
+    mkdir -p ${CALLER_HOME}/.config/polybar/scripts
     cp configs/polybar ${CALLER_HOME}/.config/polybar/config.ini
     cp configs/polybar_launch.sh ${CALLER_HOME}/.config/polybar/launch.sh
+    cp configs/polybar_backrest_status.py ${CALLER_HOME}/.config/polybar/scripts/backrest-status.py
+    _command_finished
+}
+
+function _setup_backrest() {
+    echo "Setting up backrest notification hook"
+    mkdir -p ${CALLER_HOME}/.config/backrest
+    cp configs/backrest_notify.sh ${CALLER_HOME}/.config/backrest/notify.sh
     _command_finished
 }
 

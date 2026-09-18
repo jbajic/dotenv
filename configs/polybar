@@ -28,7 +28,7 @@ disabled = #707880
 [bar/main]
 width = 100%
 height = 2.5%
-radius = 6
+radius = 0
 
 monitor = ${env:MONITOR:}
 
@@ -37,7 +37,7 @@ foreground = ${colors.foreground}
 
 line-size = 3
 
-border-size = 4
+border-size = 0
 border-color = #00000000
 
 padding-left = 0
@@ -49,9 +49,10 @@ separator = |
 separator-foreground = ${colors.disabled}
 
 font-0 = monospace;2
+font-1 = FiraCode Nerd Font:size=11;3
 
 modules-left = xworkspaces xwindow
-modules-right = pulseaudio xkeyboard memory cpu wlan eth battery date
+modules-right = backrest pulseaudio xkeyboard memory cpu battery date
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -156,6 +157,13 @@ label-connected = %{F#F0C674}%ifname%%{F-} %essid% %local_ip%
 inherit = network-base
 interface-type = wired
 label-connected = %{F#F0C674}%ifname%%{F-} %local_ip%
+
+[module/backrest]
+type = custom/script
+exec = ~/.config/polybar/scripts/backrest-status.py
+interval = 20
+click-left = xdg-open http://127.0.0.1:9898
+click-right = ~/.config/polybar/scripts/backrest-status.py --notify
 
 [module/date]
 type = internal/date
