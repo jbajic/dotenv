@@ -173,10 +173,8 @@ function _setup_polybar() {
     echo "Setting up polybar config"
     sudo apt update
     sudo apt install polybar imagemagick -y
-    mkdir -p ${CALLER_HOME}/.config/polybar/scripts
-    cp configs/polybar ${CALLER_HOME}/.config/polybar/config.ini
-    cp configs/polybar_launch.sh ${CALLER_HOME}/.config/polybar/launch.sh
-    cp configs/polybar_backrest_status.py ${CALLER_HOME}/.config/polybar/scripts/backrest-status.py
+    mkdir -p ${CALLER_HOME}/.config/polybar
+    cp -R configs/polybar/. ${CALLER_HOME}/.config/polybar/
     _command_finished
 }
 
