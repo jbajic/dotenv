@@ -12,7 +12,7 @@ function lock_background() {
     # Add the lock image
     convert $img $icon -gravity center -composite $img
     # Run i3lock with custom background
-    i3lock -u -i $img
+    i3lock --nofork -u -i $img
     # Remove the tmp file
     rm $img
 }

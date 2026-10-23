@@ -5,7 +5,7 @@ Reads backrest's operation log (sqlite, read-only) and prints one line
 for polybar with one entry per configured plan:
   running  a backup is in progress
   error    the most recent finished backup failed
-  ok       the most recent finished backup succeeded (shows its age)
+  ok       the most recent finished backup succeeded
   never    no finished backup yet
 """
 import json
@@ -133,7 +133,8 @@ def main():
     for plan in plans:
         color, glyph, suffix = plan_state(ops.get(plan, []), now_ms)
         any_alert |= color == ALERT
-        text = " ".join(p for p in (plan, icon(glyph) if glyph else "", suffix) if p)
+        # the bar shows only the state glyph; the age stays in the --notify popup
+        text = f"{plan} {icon(glyph)}" if glyph else f"{plan} {suffix}"
         parts.append(f"%{{F{color}}}{text}%{{F-}}" if color else text)
 
     head = f"%{{F{ALERT if any_alert else PRIMARY}}}{icon(ICON_OK)}%{{F-}}"
